@@ -1,0 +1,15 @@
+{
+  "appId": "com.miitha.docu",
+  "files": ["dist-react", "dist-electron"],
+  "icon": "./doculogo.png",
+  "mac": {
+    "target": "dmg"
+  },
+  "linux": {
+    "target": "AppImage",
+    "category": "Utility"
+  },
+  "win": {
+    "target": ["portable", "msi"]
+  }
+}
