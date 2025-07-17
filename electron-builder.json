@@ -1,6 +1,7 @@
 {
   "appId": "com.miitha.docu",
   "files": ["dist-react", "dist-electron"],
+  "extraResources": ["dist-electron/preload.cjs"],
   "icon": "./doculogo.png",
   "mac": {
     "target": "dmg"
