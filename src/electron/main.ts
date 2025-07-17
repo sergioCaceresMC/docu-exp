@@ -7,6 +7,8 @@ import { registerIpcPaciente } from "./ipc-controllers/ipc-paciente.js";
 
 app.on("ready", async () => {
   const mainWindow = new BrowserWindow({
+    minWidth: 770, // ancho mínimo
+    minHeight: 300,
     webPreferences: {
       preload: getPreloadPath(),
     },
