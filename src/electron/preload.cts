@@ -2,13 +2,22 @@ import { ipcRenderer } from "electron";
 
 const electron = require("electron");
 
-// Exponer funciones al renderer
-electron.contextBridge.exposeInMainWorld("electron", {
+electron.contextBridge.exposeInMainWorld("paciente", {
   //Paciente
-  obtenerPacientes: async () => await ipcRenderer.invoke("obtenerpacientes"),
-  actualizarPaciente: async (id: string, data: any) =>
-    await ipcRenderer.invoke("actualizar-paciente", { id, data }),
+  getPacientes: async () => await ipcRenderer.invoke("getPacientes"),
 
-  //...
-  getStaticData: () => console.log("static"),
+  getPacienteById: async (id: string) =>
+    await ipcRenderer.invoke("getPacienteById", { id }),
+
+  getPacienteByBirth: async (from: Date, to: Date) =>
+    await ipcRenderer.invoke("getPacienteByBirth", { from, to }),
+
+  createPaciente: async (data: any) =>
+    await ipcRenderer.invoke("createPaciente", { data }),
+
+  updatePaciente: async (id: string, data: any) =>
+    await ipcRenderer.invoke("updatePaciente", { id, data }),
+
+  deletePaciente: async (id: string) =>
+    await ipcRenderer.invoke("deletePaciente", { id }),
 });

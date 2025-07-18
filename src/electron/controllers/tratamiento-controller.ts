@@ -6,20 +6,22 @@ import { Op } from "sequelize";
 //7
 export async function get_tratamientos_by_consulta(id_consulta: string) {
   const consulta = await Consulta.findByPk(id_consulta);
-  if (!consulta) return null;
+  if (!consulta) throw new Error("Consulta not found");
   const tratamientos = await consulta.getTratamientos();
   return tratamientos;
 }
 
 //8
 export async function get_tratamiento_by_id(id: string) {
-  return await Tratamiento.findByPk(id);
+  const tratamiento = await Tratamiento.findByPk(id);
+  if (!tratamiento) throw new Error("Tratamiento not found");
+  return tratamiento;
 }
 
 //9
 export async function get_tratamientos_by_paciente(id_paciente: string) {
   const paciente = await Paciente.findByPk(id_paciente);
-  if (!paciente) return null;
+  if (!paciente) throw new Error("Paciente not found");
 
   const consultas = await paciente.getConsultas();
   const tratamientos: any[] = [];
@@ -59,7 +61,8 @@ export async function get_tratamientos_by_paciente_and_date(
     ],
   });
 
-  if (!paciente || !("consultas" in paciente)) return null;
+  if (!paciente || !("consultas" in paciente))
+    throw new Error("Paciente or consulta not found");
 
   const tratamientos: any[] = [];
   for (const consulta of (paciente as any).consultas || []) {
@@ -84,7 +87,7 @@ export async function create_tratamiento(id_consulta: string, data: any) {
 //12
 export async function update_tratamiento(id: string, data: any) {
   const tratamiento = await Tratamiento.findByPk(id);
-  if (!tratamiento) return null;
+  if (!tratamiento) throw new Error("Tratamiento not found");
 
   await tratamiento.update(data);
   return tratamiento;

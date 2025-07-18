@@ -3,9 +3,11 @@ import { Paciente } from "../models/paciente.js";
 
 //14
 export async function get_laboratorio_by_id(id: string) {
-  return await Laboratorio.findByPk(id, {
+  const laboratorio = await Laboratorio.findByPk(id, {
     include: [{ model: Archivo }],
   });
+  if (!laboratorio) throw new Error("Paciente not found");
+  return laboratorio;
 }
 
 //15

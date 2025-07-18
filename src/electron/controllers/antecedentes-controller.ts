@@ -6,12 +6,14 @@ import {
   Enfermedad,
   Cirugia,
 } from "../models/antecedentes.js";
-import { Op } from "sequelize";
+import { Op, where } from "sequelize";
 
 //===============================================Vacunas
 //39
 export async function get_vacuna_by_id(id: string) {
-  return await Vacuna.findByPk(id);
+  const vacuna = await Vacuna.findByPk(id);
+  if (!vacuna) throw new Error("Vacuna not found");
+  return vacuna;
 }
 
 //40
@@ -54,7 +56,9 @@ export async function delete_vacuna_by_id(id: string) {
 //===============================================Alergia
 //45
 export async function get_alergia_by_id(id: string) {
-  return await Alergia.findByPk(id);
+  const alergia = await Alergia.findByPk(id);
+  if (!alergia) throw new Error("Alergia not found");
+  return alergia;
 }
 
 //46
@@ -101,9 +105,11 @@ export async function delete_alergia_by_id(id: string) {
 //===============================================Enfermedad
 //51
 export async function get_enfermedad_by_id(id: string) {
-  return await Enfermedad.findByPk(id, {
+  const enfermedad = await Enfermedad.findByPk(id, {
     include: [{ model: Familiar, attributes: ["name"] }],
   });
+  if (!enfermedad) throw new Error("Enfermedad not found");
+  return enfermedad;
 }
 
 //52
@@ -149,24 +155,40 @@ export async function delete_enfermedad_by_id(id: string) {
 
 //===============================================Familiar
 //57
-export async function get_familiar_by_id(id: string) {}
+export async function get_familiar_by_id(id: string) {
+  const familiar = await Familiar.findByPk(id);
+  if (!familiar) throw new Error("Familiar not found");
+  return familiar;
+}
 
 //58
 //export async function get_familiar_by_enfermedad(id_enfermedad: string) {}
 
 //59
-export async function create_familiar(data: any) {}
+export async function create_familiar(data: any) {
+  return await Familiar.create(data);
+}
 
 //60
-export async function update_familiar_by_id(id: string, data: any) {}
+export async function update_familiar_by_id(id: string, data: any) {
+  return await Familiar.update(data, {
+    where: {
+      id: id,
+    },
+  });
+}
 
 //61
-export async function delete_familiar_by_id(id: string) {}
+export async function delete_familiar_by_id(id: string) {
+  return await Familiar.destroy({ where: { id: id } });
+}
 
 //===============================================Cirugía
 //62
 export async function get_cirugia_by_id(id: string) {
-  return await Cirugia.findByPk(id);
+  const cirugia = await Cirugia.findByPk(id);
+  if (!cirugia) throw new Error("Cirugia not found");
+  return cirugia;
 }
 
 //63

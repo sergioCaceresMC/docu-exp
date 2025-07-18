@@ -29,7 +29,6 @@ function App() {
         </p>
       </div>
       <PacientesList></PacientesList>
-      <p className="bg-amber-300">Prueba</p>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>

@@ -18,7 +18,7 @@ const PacientesList: React.FC = () => {
     async function fetchPacientes() {
       try {
         // @ts-ignore
-        const data = await window.electron.obtenerPacientes();
+        const data = await window.paciente.getPacientes();
         if (data) setPacientes(data);
       } catch (error) {
         console.error("Error al obtener pacientes:", error);

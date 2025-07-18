@@ -2,10 +2,16 @@ import { Paciente } from "../models/paciente.js";
 import { Consulta } from "../models/consulta.js";
 import { Op } from "sequelize";
 
+export async function get_consulta_by_id(id: string) {
+  const consulta = await Consulta.findByPk(id);
+  if (!consulta) throw new Error("Consulta not found");
+  return consulta;
+}
+
 //34 obtener todas las consultas de un paciente
 export async function get_consultas_by_paciente(id_paciente: string) {
   const paciente = await Paciente.findByPk(id_paciente);
-  if (!paciente) return null;
+  if (!paciente) throw new Error("Paciente not found");
   return await paciente.getConsultas({
     order: [["date", "ASC"]],
   });
@@ -83,7 +89,7 @@ export async function create_consulta_by_paciente(
   data: any
 ) {
   const paciente = await Paciente.findByPk(id_paciente);
-  if (!paciente) return null;
+  if (!paciente) throw new Error("Paciente not found");
 
   const new_consulta = Consulta.build({
     reason: data.reason,
@@ -114,7 +120,7 @@ export async function create_control_by_consulta(
 //69 Actualizar consulta
 export async function update_consulta_by_id(id: string, data: any) {
   let consulta = await Consulta.findByPk(id);
-  if (!consulta) return null;
+  if (!consulta) throw new Error("Paciente not found");
   return await consulta.update(data);
 }
 

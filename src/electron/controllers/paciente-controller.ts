@@ -3,7 +3,9 @@ import { Op } from "sequelize";
 
 //1 obtener paciente por id
 export async function get_paciente(id: string) {
-  return await Paciente.findByPk(id);
+  const paciente = await Paciente.findByPk(id);
+  if (!paciente) throw new Error("Paciente not found");
+  return paciente;
 }
 
 //2 obtener todos los pacientes

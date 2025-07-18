@@ -6,20 +6,22 @@ import { Op } from "sequelize";
 //27
 export async function get_diagnosticos_by_consulta(id_consulta: string) {
   const consulta = await Consulta.findByPk(id_consulta);
-  if (!consulta) return null;
+  if (!consulta) throw new Error("Consulta not found");
   const diagnosticos = await consulta.getDiagnosticos();
   return diagnosticos;
 }
 
 //28
 export async function get_diagnostico_by_id(id: string) {
-  return await Diagnostico.findByPk(id);
+  const diagnostico = await Diagnostico.findByPk(id);
+  if (!diagnostico) throw new Error("Consulta not found");
+  return diagnostico;
 }
 
 //29
 export async function get_diagnosticos_by_paciente(id_paciente: string) {
   const paciente = await Paciente.findByPk(id_paciente);
-  if (!paciente) return null;
+  if (!paciente) throw new Error("Paciente not found");
 
   const consultas = await paciente.getConsultas();
   const diagnosticos: any[] = [];
@@ -59,7 +61,8 @@ export async function get_diagnosticos_by_paciente_and_date(
     ],
   });
 
-  if (!paciente || !("consultas" in paciente)) return null;
+  if (!paciente || !("consultas" in paciente))
+    throw new Error("Consultas or Paciente not found");
 
   const diagnosticos: any[] = [];
   for (const consulta of (paciente as any).consultas || []) {
@@ -84,7 +87,7 @@ export async function create_diagnostico(id_consulta: string, data: any) {
 //32
 export async function update_diagnostico(id: string, data: any) {
   const diagnostico = await Diagnostico.findByPk(id);
-  if (!diagnostico) return null;
+  if (!diagnostico) throw new Error("Diagnostico not found");
 
   await diagnostico.update(data);
   return diagnostico;
