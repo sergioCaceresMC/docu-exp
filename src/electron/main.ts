@@ -4,6 +4,12 @@ import { isDev } from "./util.js";
 import { connectDB } from "./database/conection.js";
 import { getPreloadPath } from "./pathResolver.js";
 import { registerIpcPaciente } from "./ipc-controllers/ipc-paciente.js";
+import { registerIpcAntecedentes } from "./ipc-controllers/ipc-antecedentes.js";
+import { registerIpcConsulta } from "./ipc-controllers/ipc-consulta.js";
+import { registerIpcDiagnostico } from "./ipc-controllers/ipc-diagnostico.js";
+import { registerIpcExFisico } from "./ipc-controllers/ipc-examen-fisico.js";
+import { registerIpcExLaboratorio } from "./ipc-controllers/ipc-examen-laboratorio.js";
+import { registerIpcTratamiento } from "./ipc-controllers/ipc-tratamiento.js";
 
 app.on("ready", async () => {
   const mainWindow = new BrowserWindow({
@@ -20,6 +26,12 @@ app.on("ready", async () => {
   }
 
   registerIpcPaciente();
+  registerIpcAntecedentes();
+  registerIpcConsulta();
+  registerIpcDiagnostico();
+  registerIpcExFisico();
+  registerIpcExLaboratorio();
+  registerIpcTratamiento();
 
   if (isDev()) {
     mainWindow.loadURL("http://localhost:5123");

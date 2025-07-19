@@ -1,6 +1,7 @@
 import { Paciente } from "../models/paciente.js";
 import { Consulta } from "../models/consulta.js";
 import { Op } from "sequelize";
+import { Console } from "console";
 
 export async function get_consulta_by_id(id: string) {
   const consulta = await Consulta.findByPk(id);
@@ -12,7 +13,11 @@ export async function get_consulta_by_id(id: string) {
 export async function get_consultas_by_paciente(id_paciente: string) {
   const paciente = await Paciente.findByPk(id_paciente);
   if (!paciente) throw new Error("Paciente not found");
-  return await paciente.getConsultas({
+  return await Consulta.findAll({
+    where: {
+      //@ts-ignore
+      pacienteId: paciente.id,
+    },
     order: [["date", "ASC"]],
   });
 }
@@ -37,9 +42,13 @@ export async function get_consultas_by_paciente_and_date(
 
 //36 obtener controles por consulta
 export async function get_controles_by_consulta(id_consulta: string) {
+  const consulta = await Consulta.findByPk(id_consulta);
+  if (!consulta) throw new Error("Consulta not found");
+  console.log(consulta.dataValues);
   return await Consulta.findAll({
     where: {
-      parentConsultaId: id_consulta,
+      //@ts-ignore
+      parentConsultaId: consulta.id,
     },
     order: [["date", "ASC"]],
   });
@@ -114,6 +123,7 @@ export async function create_control_by_consulta(
     date: new Date(),
   });
   const consulta = await Consulta.findByPk(id_consulta);
+  if (!consulta) throw new Error("Consulta not found");
   return await consulta?.addControl(new_control);
 }
 

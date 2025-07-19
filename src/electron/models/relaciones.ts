@@ -20,6 +20,7 @@ export function make_relations() {
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
   });
+
   Consulta.belongsTo(Consulta, {
     foreignKey: "parentConsultaId",
     as: "parentConsulta",

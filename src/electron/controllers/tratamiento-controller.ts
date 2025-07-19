@@ -23,11 +23,23 @@ export async function get_tratamientos_by_paciente(id_paciente: string) {
   const paciente = await Paciente.findByPk(id_paciente);
   if (!paciente) throw new Error("Paciente not found");
 
-  const consultas = await paciente.getConsultas();
+  const consultas = await Consulta.findAll({
+    where: {
+      //@ts-ignore
+      pacienteId: paciente.id,
+    },
+    order: [["date", "ASC"]],
+  });
   const tratamientos: any[] = [];
 
   for (const consulta of consultas) {
-    const t = await consulta.getTratamientos();
+    const t = await Tratamiento.findAll({
+      where: {
+        //@ts-ignore
+        consultaId: consulta.id,
+      },
+      order: [["date", "ASC"]],
+    });
     tratamientos.push(...t); // t es un array, usamos spread para agregar todos
   }
 

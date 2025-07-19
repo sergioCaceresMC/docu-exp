@@ -7,7 +7,13 @@ import { Op } from "sequelize";
 export async function get_diagnosticos_by_consulta(id_consulta: string) {
   const consulta = await Consulta.findByPk(id_consulta);
   if (!consulta) throw new Error("Consulta not found");
-  const diagnosticos = await consulta.getDiagnosticos();
+  const diagnosticos = await Diagnostico.findAll({
+    where: {
+      //@ts-ignore
+      consultaId: consulta.id,
+    },
+    order: [["date", "ASC"]],
+  });
   return diagnosticos;
 }
 
@@ -23,11 +29,23 @@ export async function get_diagnosticos_by_paciente(id_paciente: string) {
   const paciente = await Paciente.findByPk(id_paciente);
   if (!paciente) throw new Error("Paciente not found");
 
-  const consultas = await paciente.getConsultas();
+  const consultas = await Consulta.findAll({
+    where: {
+      //@ts-ignore
+      pacienteId: paciente.id,
+    },
+    order: [["date", "ASC"]],
+  });
   const diagnosticos: any[] = [];
 
   for (const consulta of consultas) {
-    const t = await consulta.getDiagnosticos();
+    const t = await Diagnostico.findAll({
+      where: {
+        //@ts-ignore
+        consultaId: consulta.id,
+      },
+      order: [["date", "ASC"]],
+    });
     diagnosticos.push(...t); // t es un array, usamos spread para agregar todos
   }
 
@@ -46,7 +64,7 @@ export async function get_diagnosticos_by_paciente_and_date(
         model: Consulta,
         as: "consultas",
         where: {
-          fecha: {
+          date: {
             [Op.gte]: from,
             [Op.lte]: to,
           },
@@ -61,8 +79,8 @@ export async function get_diagnosticos_by_paciente_and_date(
     ],
   });
 
-  if (!paciente || !("consultas" in paciente))
-    throw new Error("Consultas or Paciente not found");
+  //if (!paciente || !("consultas" in paciente))
+  //  throw new Error("Consultas or Paciente not found");
 
   const diagnosticos: any[] = [];
   for (const consulta of (paciente as any).consultas || []) {

@@ -5,7 +5,12 @@ import { ExamenFisico } from "../models/examen-fisico.js";
 export async function get_ex_fisico_by_consulta(id_consulta: string) {
   const consulta = await Consulta.findByPk(id_consulta);
   if (!consulta) throw new Error("Consulta not found");
-  return await consulta.getExamenFisico();
+  return await ExamenFisico.findOne({
+    where: {
+      //@ts-ignore
+      consultaId: consulta.id,
+    },
+  });
 }
 
 //23

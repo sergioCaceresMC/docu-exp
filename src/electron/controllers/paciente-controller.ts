@@ -52,12 +52,4 @@ export async function update_paciente_by_id(id: string, data: any) {
   let paciente = await Paciente.findByPk(id);
   if (!paciente) return null;
   return await paciente.update(data);
-  /*{
-    name: data.name,
-    birthday: data.birthday,
-    dui: data.dui,
-    gender: data.gender,
-    phone: data.phone,
-    direction: data.direction,
-  });*/
 }
