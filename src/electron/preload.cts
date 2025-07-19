@@ -260,3 +260,9 @@ electron.contextBridge.exposeInMainWorld("exLaboratorio", {
   deleteFile: async (id: string) =>
     await ipcRenderer.invoke("deleteFile", { id }),
 });
+
+electron.contextBridge.exposeInMainWorld("electronAPI", {
+  selectSQLiteFile: () => ipcRenderer.invoke("select-sqlite-file"),
+
+  selectFile: () => ipcRenderer.invoke("select-any-file"),
+});

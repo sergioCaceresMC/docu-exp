@@ -10,6 +10,7 @@ import { registerIpcDiagnostico } from "./ipc-controllers/ipc-diagnostico.js";
 import { registerIpcExFisico } from "./ipc-controllers/ipc-examen-fisico.js";
 import { registerIpcExLaboratorio } from "./ipc-controllers/ipc-examen-laboratorio.js";
 import { registerIpcTratamiento } from "./ipc-controllers/ipc-tratamiento.js";
+import { registerIpcApi } from "./ipc-controllers/ipc-api.js";
 
 app.on("ready", async () => {
   const mainWindow = new BrowserWindow({
@@ -25,6 +26,7 @@ app.on("ready", async () => {
     console.log(error);
   }
 
+  registerIpcApi();
   registerIpcPaciente();
   registerIpcAntecedentes();
   registerIpcConsulta();
