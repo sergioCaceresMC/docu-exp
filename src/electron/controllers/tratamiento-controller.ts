@@ -58,7 +58,7 @@ export async function get_tratamientos_by_paciente_and_date(
         model: Consulta,
         as: "consultas",
         where: {
-          fecha: {
+          date: {
             [Op.gte]: from,
             [Op.lte]: to,
           },

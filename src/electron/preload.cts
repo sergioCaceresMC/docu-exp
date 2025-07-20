@@ -265,4 +265,8 @@ electron.contextBridge.exposeInMainWorld("electronAPI", {
   selectSQLiteFile: () => ipcRenderer.invoke("select-sqlite-file"),
 
   selectFile: () => ipcRenderer.invoke("select-any-file"),
+
+  selectDB: () => ipcRenderer.invoke("select-database"),
+
+  exportDB: () => ipcRenderer.invoke("export-database"),
 });

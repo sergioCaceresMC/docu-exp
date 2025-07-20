@@ -1,40 +1,25 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
-import PacientesList from "./components/lista";
-import SQLiteFileSelector from "./components/ruta";
+// renderer/src/App.jsx
+import { Routes, Route } from "react-router-dom";
+import { Home } from "./pages/home";
+import Consultas from "./pages/Consultas";
+import Diagnosticos from "./pages/Diagnosticos";
+import Tratamientos from "./pages/Tratamientos";
+import Antecedentes from "./pages/Antecedentes";
+import Controles from "./pages/Controles";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button
-          onClick={() => {
-            setCount((count) => count + 1);
-            // @ts-ignore
-            window.electron.getStaticData();
-          }}
-        >
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <PacientesList></PacientesList>
-      <SQLiteFileSelector />
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/paciente" element={<Home />} />
+        <Route path="/consultas" element={<Consultas />} />
+        <Route path="/controles" element={<Controles />} />
+        <Route path="/antecedentes" element={<Antecedentes />} />
+        <Route path="/diagnosticos" element={<Diagnosticos />} />
+        <Route path="/tratamientos" element={<Tratamientos />} />
+      </Routes>
+    </div>
   );
 }
 
