@@ -242,6 +242,13 @@ electron.contextBridge.exposeInMainWorld("exLaboratorio", {
   getLaboratoriosByPaciente: async (id: string) =>
     await ipcRenderer.invoke("getLaboratoriosByPaciente", { id }),
 
+  getLaboratoriosByPacienteAndDate: async (id: string, from: Date, to: Date) =>
+    await ipcRenderer.invoke("getLaboratoriosByPacienteAndDate", {
+      id,
+      from,
+      to,
+    }),
+
   createLaboratorioByPaciente: async (id: string, data: any) =>
     await ipcRenderer.invoke("createLaboratorioByPaciente", { id, data }),
 

@@ -1,10 +1,10 @@
 import { Laboratorio, Archivo } from "../models/examen-laboratorio.js";
-import { Paciente } from "../models/paciente.js";
+import { Op } from "sequelize";
 
 //14
 export async function get_laboratorio_by_id(id: string) {
   const laboratorio = await Laboratorio.findByPk(id, {
-    include: [{ model: Archivo }],
+    include: [{ model: Archivo, as: "archivos" }],
   });
   if (!laboratorio) throw new Error("Paciente not found");
   return laboratorio;
@@ -14,7 +14,27 @@ export async function get_laboratorio_by_id(id: string) {
 export async function get_laboratorios_by_paciente(id_paciente: string) {
   return await Laboratorio.findAll({
     where: { pacienteId: id_paciente },
-    include: [{ model: Archivo }],
+    include: [{ model: Archivo, as: "archivos" }],
+    order: [["date", "ASC"]],
+  });
+}
+
+//15
+export async function get_laboratorios_by_paciente_and_date(
+  id_paciente: string,
+  from: Date,
+  to: Date
+) {
+  return await Laboratorio.findAll({
+    where: {
+      pacienteId: id_paciente,
+      date: {
+        [Op.gte]: from,
+        [Op.lte]: to,
+      },
+    },
+    include: [{ model: Archivo, as: "archivos" }],
+    order: [["date", "ASC"]],
   });
 }
 

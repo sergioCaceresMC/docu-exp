@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { HCardAntecedente } from "../Cards/HCardAntecedente";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Plus, SquarePlus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 type FetchFunction = (id: string) => Promise<
   {
@@ -13,6 +14,7 @@ type FetchFunction = (id: string) => Promise<
 
 type ListaAntecedentesProps = {
   type: string;
+  typeSingular: string;
   path: string;
   search: string;
   fetchFunction: FetchFunction;
@@ -20,6 +22,7 @@ type ListaAntecedentesProps = {
 
 export function ListaAntecedentes({
   type,
+  typeSingular = "vacuna",
   search,
   path,
   fetchFunction,
@@ -28,6 +31,7 @@ export function ListaAntecedentes({
     { id: string; name: string; description: string; date: string }[]
   >([]);
 
+  const navigate = useNavigate();
   const [filteredData, setFilteredData] = useState<typeof data>([]);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -61,8 +65,8 @@ export function ListaAntecedentes({
     <div className="flex flex-col pt-5">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={` px-4 py-2 bg-green-600 text-white flex justify-between 
-        rounded-t hover:bg-green-700 transition
+        className={` px-4 py-2 bg-teal-400 font-semibold text-white flex justify-between 
+        rounded-t hover:bg-teal-500 transition hover:cursor-pointer
         ${isOpen ? `` : `rounded-b`}`}
       >
         {isOpen ? `Ocultar ${type}` : `Mostrar ${type}`}
@@ -71,7 +75,7 @@ export function ListaAntecedentes({
       </button>
 
       {isOpen && (
-        <div className="flex flex-col">
+        <div className="flex flex-col shadow-md">
           {filteredData.map((item) => (
             <HCardAntecedente
               path={path}
@@ -82,6 +86,14 @@ export function ListaAntecedentes({
               id={item.id}
             />
           ))}
+          <div
+            className="flex justify-center bg-sky-500 hover:bg-blue-500 rounded-b font-semibold text-white inset-shadow-xs p-2 shadow-xs hover:cursor-pointer"
+            onClick={() => {
+              navigate(`${path}/new`);
+            }}
+          >
+            <p className="pr-2">Nueva {typeSingular}</p> <SquarePlus />
+          </div>
         </div>
       )}
     </div>

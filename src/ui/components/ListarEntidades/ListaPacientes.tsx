@@ -56,15 +56,26 @@ export function ListaPacientes({
   useEffect(() => {
     const lowerSearch = search.toLowerCase();
 
-    const filtered = data.filter((item) =>
-      item.name.toLowerCase().includes(lowerSearch)
+    const filtered = data.filter(
+      (item) =>
+        item.name.toLowerCase().includes(lowerSearch) ||
+        item.dui.toLowerCase().includes(lowerSearch)
     );
 
     setFilteredData(filtered);
   }, [search, data]);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col shadow-md">
+      <div className="bg-green-600 text-white font-semibold flex rounded-t-xl">
+        <p className="w-50 md:w-80 px-6 py-2 whitespace-nowrap overflow-hidden text-ellipsis">
+          Nombre
+        </p>
+        <p className="flex-1 px-6 py-2 whitespace-nowrap overflow-hidden text-ellipsis">
+          DUI
+        </p>
+        <p className="w-40 py-2 px-5 whitespace-nowrap">F. Nacimiento</p>
+      </div>
       {filteredData.map((item) => (
         <HCardPaciente
           path={path}

@@ -6,6 +6,7 @@ import Diagnosticos from "./pages/Diagnosticos";
 import Tratamientos from "./pages/Tratamientos";
 import Controles from "./pages/Controles";
 import Paciente from "./pages/Paciente";
+import Laboratorios from "./pages/Laboratorios";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/paciente" element={<Paciente />} />
         <Route path="/consultas" element={<Consultas />} />
+        <Route path="/laboratorios" element={<Laboratorios />} />
         <Route path="/controles" element={<Controles />} />
         <Route path="/diagnosticos" element={<Diagnosticos />} />
         <Route path="/tratamientos" element={<Tratamientos />} />

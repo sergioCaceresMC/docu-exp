@@ -1,14 +1,8 @@
-import { useState, useEffect } from "react";
 import { Sidebar } from "../components/layout/Sidebar";
 import { ViewPaciente } from "../components/ViewData/ViewPaciente";
 import { ListaAntecedentes } from "../components/ListarEntidades/ListaAntecedente";
 
 export default function Paciente() {
-  //Métodos de búsqueda
-  const [from, setFrom] = useState(new Date("December 1, 1900 03:24:00"));
-  const [to, setTo] = useState(new Date(Date.now() + 3600 * 1000 * 24));
-  const [search, setSearch] = useState("");
-
   return (
     <>
       <Sidebar currentView="paciente" />
@@ -16,6 +10,7 @@ export default function Paciente() {
         <ViewPaciente />
         <ListaAntecedentes
           type={"vacunas"}
+          typeSingular="vacuna"
           path={"/vacunas"}
           search={""}
           fetchFunction={
@@ -25,6 +20,7 @@ export default function Paciente() {
         />
         <ListaAntecedentes
           type={"alergias"}
+          typeSingular="alergia"
           path={"/alergias"}
           search={""}
           fetchFunction={
@@ -34,6 +30,7 @@ export default function Paciente() {
         />
         <ListaAntecedentes
           type={"cirugías"}
+          typeSingular="cirugía"
           path={"/cirugia"}
           search={""}
           fetchFunction={
@@ -43,6 +40,7 @@ export default function Paciente() {
         />
         <ListaAntecedentes
           type={"enfermedades"}
+          typeSingular="enfermedad"
           path={"/enfermedades"}
           search={""}
           fetchFunction={

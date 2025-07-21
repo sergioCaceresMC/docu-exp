@@ -22,22 +22,27 @@ export function Searcher({
               className="flex-grow px-3 h-9 rounded inset-shadow-2xs border-0 border-r-0 border-green-600 focus:outline-none focus:border-green-600 bg-white"
               onChange={(e) => onChangeSearch(e.target.value)}
             />
-            {/*
-            <button
-              type="submit"
-              className="bg-green-600 text-white shadow-md rounded-r px-2 md:px-3 py-0 md:py-1 whitespace-nowrap hover:bg-green-700 hover:cursor-pointer"
-            >
-              Buscar
-            </button>*/}
           </div>
           <div className="flex h-9">
             <label className="py-3/2 bg-green-600 shadow-md text-white rounded-l px-3 md:px-3 py-1">
               Desde:
             </label>
             <input
-              className="px-3 rounded-r border-0 bg-white inset-shadow-2xs border-green-600 focus:outline-none shadow-md focus:border-green-600"
+              className="px-3 rounded-r select-none border-0 bg-white inset-shadow-2xs border-green-600 focus:outline-none shadow-md focus:border-green-600 hover:cursor-pointer"
               type="date"
-              onChange={onChangeFrom}
+              onChange={(e) => {
+                const value = e.target.value;
+                const date = value
+                  ? new Date(value)
+                  : new Date("December 1, 1900 03:24:00");
+                onChangeFrom({
+                  target: { value: date.toISOString().split("T")[0] },
+                } as any);
+              }}
+              onClick={(e) => {
+                // @ts-ignore
+                e.target.showPicker?.(); // para navegadores que lo soportan (Chrome, Edge)
+              }}
             />
           </div>
           <div className="flex h-9">
@@ -45,9 +50,21 @@ export function Searcher({
               Hasta:
             </label>
             <input
-              className="px-3 rounded-r border-0 bg-white inset-shadow-2xs border-green-600 focus:outline-none shadow-md focus:border-green-600"
+              className="px-3 rounded-r select-none border-0 bg-white inset-shadow-2xs border-green-600 focus:outline-none shadow-md focus:border-green-600 hover:cursor-pointer"
               type="date"
-              onChange={onChangeTo}
+              onChange={(e) => {
+                const value = e.target.value;
+                const date = value
+                  ? new Date(value)
+                  : new Date(Date.now() + 3600 * 1000 * 24);
+                onChangeTo({
+                  target: { value: date.toISOString().split("T")[0] },
+                } as any);
+              }}
+              onClick={(e) => {
+                // @ts-ignore
+                e.target.showPicker?.(); // para navegadores que lo soportan (Chrome, Edge)
+              }}
             />
           </div>
         </div>

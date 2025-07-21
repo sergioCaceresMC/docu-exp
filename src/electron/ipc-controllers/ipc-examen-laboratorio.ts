@@ -11,6 +11,15 @@ export function registerIpcExLaboratorio() {
     return tratamientos.map((p) => p.toJSON());
   });
 
+  ipcMain.handle(
+    "getLaboratoriosByPacienteAndDate",
+    async (event, { id, from, to }) => {
+      const tratamientos =
+        await exlaboratorio.get_laboratorios_by_paciente_and_date(id, from, to);
+      return tratamientos.map((p) => p.toJSON());
+    }
+  );
+
   ipcMain.handle("createLaboratorioByPaciente", async (event, { id, data }) => {
     const tratamientos = await exlaboratorio.create_laboratorio_by_pacient(
       id,

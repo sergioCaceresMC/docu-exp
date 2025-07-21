@@ -1,4 +1,3 @@
-import { SquarePen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export function HCardPaciente({
@@ -26,21 +25,21 @@ export function HCardPaciente({
   return (
     <div
       id={id}
-      className="flex shadow-md inset-shadow-2xs hover:cursor-pointer rounded-lg"
+      className="flex hover:bg-gray-50 inset-shadow-xs shadow-xs hover:cursor-pointer"
       onClick={() => {
         sessionStorage.setItem("id_paciente", id);
         navigate(`/paciente`);
       }}
     >
-      <p className="flex-1 px-6 py-5 whitespace-nowrap overflow-hidden text-ellipsis">
-        Nombre: {name}
+      <p className="w-50 md:w-80 px-6 py-5 whitespace-nowrap overflow-hidden text-ellipsis">
+        {name}
       </p>
-      <p className=" py-5 pl-5 whitespace-nowrap">--</p>
       <p className="flex-1 px-6 py-5 whitespace-nowrap overflow-hidden text-ellipsis">
-        DUI: {dui}
+        {dui}
       </p>
-      <p className=" py-5 pl-5 whitespace-nowrap">--</p>
-      <p className=" py-5 px-5 whitespace-nowrap">F. Nacimiento: {formatted}</p>
+      <p className="w-40 text-center py-5 px-5 whitespace-nowrap">
+        {formatted}
+      </p>
     </div>
   );
 }

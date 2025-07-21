@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 export function HCardAntecedente({
   fecha,
   name,
-  description,
   id,
   path,
 }: {
@@ -26,14 +25,13 @@ export function HCardAntecedente({
   return (
     <div
       id={id}
-      className="flex shadow-md inset-shadow-2xs hover:cursor-pointer"
+      className="flex inset-shadow-xs hover:bg-gray-50 shadow-xs hover:cursor-pointer"
       onClick={() => {
         navigate(`${path}/${id}`);
       }}
     >
-      <p className=" py-5 pl-5 whitespace-nowrap">{formatted}</p>
-      <p className=" py-5 pl-5 whitespace-nowrap">--</p>
-      <p className="flex-1 px-6 py-5 whitespace-nowrap overflow-hidden text-ellipsis">
+      <p className=" py-5 px-5 whitespace-nowrap">{formatted}</p>
+      <p className="flex-1 px-6 py-5 border-l border-gray-200 whitespace-nowrap overflow-hidden text-ellipsis">
         {name}
       </p>
       <div className="px-3 py-4 flex whitespace-nowrap">

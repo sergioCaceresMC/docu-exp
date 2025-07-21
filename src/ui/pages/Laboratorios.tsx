@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Searcher } from "../components/layout/Searcher";
 import { Sidebar } from "../components/layout/Sidebar";
-import { ListaDiagnostico } from "../components/ListarEntidades/ListaDiagnosticos";
+import { ListaLaboratorios } from "../components/ListarEntidades/ListaLaboratorios";
 
-export default function Diagnosticos() {
+export default function Laboratorios() {
   //Métodos de búsqueda
   const [from, setFrom] = useState(new Date("December 1, 1900 03:24:00"));
   const [to, setTo] = useState(new Date(Date.now() + 3600 * 1000 * 24));
@@ -11,21 +11,21 @@ export default function Diagnosticos() {
 
   return (
     <>
-      <Sidebar currentView="diagnostico" />
+      <Sidebar currentView="laboratorio" />
       <div className="ml-20 lg:ml-50 mt-0 h-full p-10">
         <Searcher
           onChangeFrom={(e) => setFrom(new Date(e.target.value))}
           onChangeTo={(e) => setTo(new Date(e.target.value))}
           onChangeSearch={setSearch}
         />
-        <ListaDiagnostico
-          path="/diagnosticos"
+        <ListaLaboratorios
+          path="/controles"
           search={search}
           from={from}
           to={to}
           fetchFunction={
             //@ts-ignore
-            window.diagnostico.getDiagnosticosByPacienteAndDate
+            window.exLaboratorio.getLaboratoriosByPacienteAndDate
           }
         />
       </div>

@@ -24,14 +24,13 @@ export function HCard({
   return (
     <div
       id={id}
-      className="flex shadow-md inset-shadow-2xs hover:cursor-pointer rounded-lg"
+      className="flex shadow-md inset-shadow-2xs hover:bg-gray-50 hover:cursor-pointer rounded-lg"
       onClick={() => {
         navigate(`${path}/${id}`);
       }}
     >
-      <p className=" py-5 pl-5 whitespace-nowrap">{formatted}</p>
-      <p className=" py-5 pl-5 whitespace-nowrap">--</p>
-      <p className="flex-1 px-6 py-5 whitespace-nowrap overflow-hidden text-ellipsis">
+      <p className=" py-5 px-5 whitespace-nowrap">{formatted}</p>
+      <p className="flex-1 px-6 py-5 border-l border-gray-300 whitespace-nowrap overflow-hidden text-ellipsis">
         {text}
       </p>
       <div className="px-3 py-4 flex whitespace-nowrap">
