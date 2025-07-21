@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Searcher } from "../components/Searcher";
-import { Sidebar } from "../components/Sidebar";
-import { ListaConsultas } from "../components/ListaConsultas";
+import { Searcher } from "../components/layout/Searcher";
+import { Sidebar } from "../components/layout/Sidebar";
+import { ListaConsultas } from "../components/ListarEntidades/ListaConsultas";
+import { ListaPacientes } from "../components/ListarEntidades/ListaPacientes";
 
 export function Home() {
   //Métodos de búsqueda
@@ -10,24 +11,23 @@ export function Home() {
   const [search, setSearch] = useState("");
 
   return (
-    <>
-      <Sidebar currentView="home" />
-      <div className="ml-20 md:ml-50 mt-0 h-full p-10">
-        <Searcher
-          onChangeFrom={(e) => setFrom(new Date(e.target.value))}
-          onChangeTo={(e) => setTo(new Date(e.target.value))}
-          onChangeSearch={setSearch}
-        />
-        <ListaConsultas
-          search={search}
-          from={from}
-          to={to}
-          fetchFunction={
-            //@ts-ignore
-            window.consulta.getConsultaByPacienteAndDate
-          }
-        />
-      </div>
-    </>
+    <div className="p-10">
+      <h1 className="text-center text-3xl mb-5">Seleccione un paciente</h1>
+      <Searcher
+        onChangeFrom={(e) => setFrom(new Date(e.target.value))}
+        onChangeTo={(e) => setTo(new Date(e.target.value))}
+        onChangeSearch={setSearch}
+      />
+      <ListaPacientes
+        path="/consultas"
+        search={search}
+        from={from}
+        to={to}
+        fetchFunction={
+          //@ts-ignore
+          window.paciente.getPacienteByBirth
+        }
+      />
+    </div>
   );
 }

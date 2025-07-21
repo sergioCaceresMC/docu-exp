@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { HCard } from "./HCard";
+import { HCard } from "../Cards/HCard";
 
 type FetchFunction = (
   id: string,
@@ -8,7 +8,7 @@ type FetchFunction = (
 ) => Promise<
   {
     id: string;
-    reason: string;
+    tratment: string;
     date: string;
   }[]
 >;
@@ -17,23 +17,25 @@ type ListaConsultasProps = {
   search: string;
   from: Date;
   to: Date;
+  path: string;
   fetchFunction: FetchFunction;
 };
 
-export function ListaConsultas({
+export function ListaTratamientos({
   search,
   from,
   to,
+  path,
   fetchFunction,
 }: ListaConsultasProps) {
   const [data, setData] = useState<
-    { id: string; reason: string; date: string }[]
+    { id: string; tratment: string; date: string }[]
   >([]);
 
   const [filteredData, setFilteredData] = useState<
-    { id: string; reason: string; date: string }[]
+    { id: string; tratment: string; date: string }[]
   >([]);
-  sessionStorage.setItem("id_paciente", "b950098c-fcf8-4602-a9b6-a7791468d446");
+
   const paciente = sessionStorage.getItem("id_paciente");
 
   useEffect(() => {
@@ -58,7 +60,7 @@ export function ListaConsultas({
     const lowerSearch = search.toLowerCase();
 
     const filtered = data.filter((item) =>
-      item.reason.toLowerCase().includes(lowerSearch)
+      item.tratment.toLowerCase().includes(lowerSearch)
     );
 
     setFilteredData(filtered);
@@ -69,8 +71,9 @@ export function ListaConsultas({
       {filteredData.map((item) => (
         <HCard
           key={item.id}
+          path={path}
           fecha={item.date}
-          text={item.reason}
+          text={item.tratment}
           id={item.id}
         />
       ))}

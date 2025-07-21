@@ -6,6 +6,7 @@ import {
   ClipboardCheck,
   SquareActivity,
   PillBottle,
+  LogOut,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -15,12 +16,6 @@ export function Sidebar({ currentView }: { currentView: string }) {
 
   const navItems = [
     { label: "Paciente", icon: <User />, view: "paciente", path: "/paciente" },
-    {
-      label: "Antecedentes",
-      icon: <IdCard />,
-      view: "antecedente",
-      path: "/antecedentes",
-    },
     {
       label: "Laboratorios",
       icon: <TestTube />,
@@ -51,6 +46,12 @@ export function Sidebar({ currentView }: { currentView: string }) {
       view: "tratamiento",
       path: "/tratamientos",
     },
+    {
+      label: "Menu Principal",
+      icon: <LogOut />,
+      view: "menu",
+      path: "/",
+    },
   ];
 
   return (
@@ -58,7 +59,7 @@ export function Sidebar({ currentView }: { currentView: string }) {
       {/* Sidebar */}
       <div
         className={`fixed top-auto left-0 h-full bg-green-600 text-white shadow-lg transition-transform z-40 
-         md:w-50 w-20 p-4 flex flex-col gap-4
+         lg:w-50 w-19 p-4 flex flex-col gap-4
         ${open ? "translate-x-0" : "-translate-x-full"} 
         md:translate-x-0`}
       >
@@ -73,7 +74,7 @@ export function Sidebar({ currentView }: { currentView: string }) {
             } flex hover:cursor-pointer items-center gap-3 p-2 hover:bg-green-700 rounded transition`}
           >
             {item.icon}
-            <span className=" hidden md:inline-block">{item.label}</span>
+            <span className=" hidden lg:inline-block">{item.label}</span>
           </button>
         ))}
       </div>

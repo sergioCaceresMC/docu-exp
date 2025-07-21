@@ -31,6 +31,7 @@ export async function get_consultas_by_paciente_and_date(
   return await Consulta.findAll({
     where: {
       pacienteId: id_paciente,
+      type: "consulta",
       date: {
         [Op.gt]: from,
         [Op.lt]: to,

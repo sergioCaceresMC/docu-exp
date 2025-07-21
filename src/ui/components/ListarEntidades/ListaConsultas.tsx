@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { HCard } from "./HCard";
+import { HCard } from "../Cards/HCard";
 
 type FetchFunction = (
   id: string,
@@ -8,32 +8,33 @@ type FetchFunction = (
 ) => Promise<
   {
     id: string;
-    diagnosis: string;
+    reason: string;
     date: string;
   }[]
 >;
 
 type ListaConsultasProps = {
+  path: string;
   search: string;
   from: Date;
   to: Date;
   fetchFunction: FetchFunction;
 };
 
-export function ListaDiagnostico({
+export function ListaConsultas({
   search,
   from,
   to,
+  path,
   fetchFunction,
 }: ListaConsultasProps) {
   const [data, setData] = useState<
-    { id: string; diagnosis: string; date: string }[]
+    { id: string; reason: string; date: string }[]
   >([]);
 
   const [filteredData, setFilteredData] = useState<
-    { id: string; diagnosis: string; date: string }[]
+    { id: string; reason: string; date: string }[]
   >([]);
-  sessionStorage.setItem("id_paciente", "b950098c-fcf8-4602-a9b6-a7791468d446");
   const paciente = sessionStorage.getItem("id_paciente");
 
   useEffect(() => {
@@ -58,7 +59,7 @@ export function ListaDiagnostico({
     const lowerSearch = search.toLowerCase();
 
     const filtered = data.filter((item) =>
-      item.diagnosis.toLowerCase().includes(lowerSearch)
+      item.reason.toLowerCase().includes(lowerSearch)
     );
 
     setFilteredData(filtered);
@@ -68,9 +69,10 @@ export function ListaDiagnostico({
     <div className="flex flex-col gap-2">
       {filteredData.map((item) => (
         <HCard
+          path={path}
           key={item.id}
           fecha={item.date}
-          text={item.diagnosis}
+          text={item.reason}
           id={item.id}
         />
       ))}

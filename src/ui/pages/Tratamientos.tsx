@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { Searcher } from "../components/Searcher";
-import { Sidebar } from "../components/Sidebar";
-import { ListaConsultas } from "../components/ListaConsultas";
-import { ListaDiagnostico } from "../components/ListaDiagnosticos";
-import { ListaTratamientos } from "../components/ListaTratamiento";
+import { Searcher } from "../components/layout/Searcher";
+import { Sidebar } from "../components/layout/Sidebar";
+import { ListaConsultas } from "../components/ListarEntidades/ListaConsultas";
+import { ListaDiagnostico } from "../components/ListarEntidades/ListaDiagnosticos";
+import { ListaTratamientos } from "../components/ListarEntidades/ListaTratamiento";
 
 export default function Tratamientos() {
   //Métodos de búsqueda
@@ -14,13 +14,14 @@ export default function Tratamientos() {
   return (
     <>
       <Sidebar currentView="tratamiento" />
-      <div className="ml-20 md:ml-50 mt-0 h-full p-10">
+      <div className="ml-20 lg:ml-50 mt-0 h-full p-10">
         <Searcher
           onChangeFrom={(e) => setFrom(new Date(e.target.value))}
           onChangeTo={(e) => setTo(new Date(e.target.value))}
           onChangeSearch={setSearch}
         />
         <ListaTratamientos
+          path="/tratamientos"
           search={search}
           from={from}
           to={to}

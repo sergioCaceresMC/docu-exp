@@ -116,7 +116,7 @@ export async function get_enfermedad_by_id(id: string) {
 export async function get_enfermedades_paciente(id_paciente: string) {
   return await Enfermedad.findAll({
     where: { pacienteId: id_paciente },
-    include: [{ model: Familiar, attributes: ["name"] }],
+    include: [{ model: Familiar, as: "familiar", attributes: ["name"] }],
   });
 }
 
@@ -134,7 +134,7 @@ export async function get_enfermedades_by_paciente_and_date(
         [Op.lte]: to,
       },
     },
-    include: [{ model: Familiar, attributes: ["name"] }],
+    include: [{ model: Familiar, as: "familiar", attributes: ["name"] }],
   });
 }
 

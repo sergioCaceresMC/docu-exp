@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Searcher } from "../components/Searcher";
-import { Sidebar } from "../components/Sidebar";
-import { ListaConsultas } from "../components/ListaConsultas";
+import { Searcher } from "../components/layout/Searcher";
+import { Sidebar } from "../components/layout/Sidebar";
+import { ListaConsultas } from "../components/ListarEntidades/ListaConsultas";
 
 export default function Consultas() {
   //Métodos de búsqueda
@@ -12,13 +12,14 @@ export default function Consultas() {
   return (
     <>
       <Sidebar currentView="consulta" />
-      <div className="ml-20 md:ml-50 mt-0 h-full p-10">
+      <div className="ml-20 lg:ml-50 mt-0 h-full p-10">
         <Searcher
           onChangeFrom={(e) => setFrom(new Date(e.target.value))}
           onChangeTo={(e) => setTo(new Date(e.target.value))}
           onChangeSearch={setSearch}
         />
         <ListaConsultas
+          path="/consultas"
           search={search}
           from={from}
           to={to}
