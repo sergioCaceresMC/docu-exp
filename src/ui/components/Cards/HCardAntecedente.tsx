@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 export function HCardAntecedente({
   fecha,
   name,
+  description,
   id,
   path,
 }: {
@@ -25,20 +26,31 @@ export function HCardAntecedente({
   return (
     <div
       id={id}
-      className="flex inset-shadow-xs hover:bg-gray-50 shadow-xs hover:cursor-pointer"
+      className="grid grid-cols-[150px_200px_1fr_auto] items-center 
+             inset-shadow-xs hover:bg-gray-50 shadow-xs 
+             hover:cursor-pointer border-b border-gray-200 w-full"
       onClick={() => {
         navigate(`${path}/${id}`);
       }}
     >
-      <p className=" py-5 px-5 whitespace-nowrap">{formatted}</p>
-      <p className="flex-1 px-6 py-5 border-l border-gray-200 whitespace-nowrap overflow-hidden text-ellipsis">
+      <p className="py-5 px-4 whitespace-nowrap">{formatted}</p>
+
+      <p className="py-5 px-4 border-l border-gray-200 whitespace-nowrap overflow-hidden text-ellipsis">
         {name}
       </p>
-      <div className="px-3 py-4 flex whitespace-nowrap">
-        <button className="px-1 py-1 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-500 transition duration-150 ease-in-out hover:cursor-pointer flex">
+
+      <p className="py-5 px-4 border-l md:inline-block hidden border-gray-200 h-full whitespace-nowrap overflow-hidden text-ellipsis">
+        {description}
+      </p>
+
+      <div
+        className="py-4 px-4 border-l border-gray-200 ml-auto md:ml-0 flex gap-2"
+        onClick={(e) => e.stopPropagation()} // Para evitar que el botón dispare el navigate
+      >
+        <button className="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">
           <SquarePen />
         </button>
-        <button className="ml-2 px-1 py-1 font-medium text-white bg-[#ff0000] rounded-md hover:bg-red-600 focus:outline-none focus:shadow-outline-red active:bg-[#ff0000] transition duration-150 ease-in-out flex hover:cursor-pointer">
+        <button className="px-2 py-1 text-white bg-red-600 rounded hover:bg-red-700">
           <Trash2 />
         </button>
       </div>

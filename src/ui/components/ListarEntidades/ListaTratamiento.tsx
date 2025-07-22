@@ -9,6 +9,7 @@ type FetchFunction = (
   {
     id: string;
     tratment: string;
+    consultaId: string;
     date: string;
   }[]
 >;
@@ -29,11 +30,11 @@ export function ListaTratamientos({
   fetchFunction,
 }: ListaConsultasProps) {
   const [data, setData] = useState<
-    { id: string; tratment: string; date: string }[]
+    { id: string; tratment: string; date: string; consultaId: string }[]
   >([]);
 
   const [filteredData, setFilteredData] = useState<
-    { id: string; tratment: string; date: string }[]
+    { id: string; tratment: string; date: string; consultaId: string }[]
   >([]);
 
   const paciente = sessionStorage.getItem("id_paciente");
@@ -70,6 +71,7 @@ export function ListaTratamientos({
     <div className="flex flex-col gap-2">
       {filteredData.map((item) => (
         <HCard
+          id_path={item.consultaId}
           key={item.id}
           path={path}
           fecha={item.date}

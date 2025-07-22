@@ -1,4 +1,4 @@
-import { dialog, ipcMain } from "electron";
+import { app, dialog, ipcMain, shell } from "electron";
 import fs from "fs";
 import { connectDB } from "../database/conection.js";
 import { route } from "../database/db.js";
@@ -75,6 +75,28 @@ export function registerIpcApi() {
     } catch (error) {
       console.error("Error al exportar la base de datos:", error);
       return null;
+    }
+  });
+
+  ipcMain.handle("open-file", async (_event, absolutePath: string) => {
+    try {
+      if (!path.isAbsolute(absolutePath)) {
+        throw new Error("La ruta no es absoluta");
+      }
+
+      if (!fs.existsSync(absolutePath)) {
+        throw new Error("El archivo no existe");
+      }
+
+      const result = await shell.openPath(absolutePath);
+      if (result) {
+        throw new Error(result);
+      }
+
+      return { success: true };
+    } catch (error) {
+      console.error("Error al abrir el archivo:", error);
+      return { success: false, error: (error as Error).message };
     }
   });
 }

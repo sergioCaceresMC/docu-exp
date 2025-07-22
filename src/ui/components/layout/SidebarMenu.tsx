@@ -1,54 +1,26 @@
-import {
-  User,
-  TestTube,
-  Stethoscope,
-  ClipboardCheck,
-  SquareActivity,
-  PillBottle,
-  LogOut,
-  Users,
-} from "lucide-react";
+import { LogOut, Database, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export function Sidebar({ currentView }: { currentView: string }) {
+export function SidebarMenu({ currentView }: { currentView: string }) {
   const navigate = useNavigate();
   const open: boolean = true;
 
   const navItems = [
-    { label: "Paciente", icon: <User />, view: "paciente", path: "/paciente" },
     {
-      label: "Laboratorios",
-      icon: <TestTube />,
-      view: "laboratorio",
-      path: "/laboratorios",
-    },
-    {
-      label: "Consultas",
-      icon: <Stethoscope />,
-      view: "consulta",
-      path: "/consultas",
-    },
-    {
-      label: "Controles",
-      icon: <ClipboardCheck />,
-      view: "control",
-      path: "/controles",
-    },
-    {
-      label: "Diagnosticos",
-      icon: <SquareActivity />,
-      view: "diagnostico",
-      path: "/diagnosticos",
-    },
-    {
-      label: "Tratamientos",
-      icon: <PillBottle />,
-      view: "tratamiento",
-      path: "/tratamientos",
-    },
-    {
-      label: "Otros pacientes",
+      label: "Pacientes",
       icon: <Users />,
+      view: "pacientes",
+      path: "/",
+    },
+    {
+      label: "Base de datos",
+      icon: <Database />,
+      view: "database",
+      path: "/database",
+    },
+    {
+      label: "Salir",
+      icon: <LogOut />,
       view: "menu",
       path: "/",
     },

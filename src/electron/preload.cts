@@ -271,6 +271,11 @@ electron.contextBridge.exposeInMainWorld("exLaboratorio", {
 electron.contextBridge.exposeInMainWorld("electronAPI", {
   selectSQLiteFile: () => ipcRenderer.invoke("select-sqlite-file"),
 
+  openFile: (
+    absolutePath: string
+  ): Promise<{ success: boolean; error?: string }> =>
+    ipcRenderer.invoke("open-file", absolutePath),
+
   selectFile: () => ipcRenderer.invoke("select-any-file"),
 
   selectDB: () => ipcRenderer.invoke("select-database"),

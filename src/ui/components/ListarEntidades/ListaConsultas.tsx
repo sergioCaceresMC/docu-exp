@@ -69,6 +69,7 @@ export function ListaConsultas({
     <div className="flex flex-col gap-2">
       {filteredData.map((item) => (
         <HCard
+          id_path={item.id}
           path={path}
           key={item.id}
           fecha={item.date}

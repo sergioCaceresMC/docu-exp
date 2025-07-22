@@ -5,7 +5,6 @@ export function HCardPaciente({
   name,
   dui,
   id,
-  path,
 }: {
   fecha: string;
   name: string;

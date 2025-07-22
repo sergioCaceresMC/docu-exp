@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
-import { HCardAntecedente } from "../Cards/HCardAntecedente";
 import { ChevronDown, ChevronUp, SquarePlus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { HCardView } from "./HCardView";
 
 type FetchFunction = (id: string) => Promise<
   {
     id: string;
-    name: string;
+    diagnosis: string;
+    notes: string;
     description: string;
     date: string;
   }[]
 >;
 
 type ListaAntecedentesProps = {
+  id: any;
   type: string;
   typeSingular: string;
   path: string;
@@ -20,7 +22,8 @@ type ListaAntecedentesProps = {
   fetchFunction: FetchFunction;
 };
 
-export function ListaAntecedentes({
+export function ViewListaDiagnosticos({
+  id,
   type,
   typeSingular = "vacuna",
   search,
@@ -28,21 +31,19 @@ export function ListaAntecedentes({
   fetchFunction,
 }: ListaAntecedentesProps) {
   const [data, setData] = useState<
-    { id: string; name: string; description: string; date: string }[]
+    { id: string; diagnosis: string; notes: string; date: string }[]
   >([]);
 
   const navigate = useNavigate();
   const [filteredData, setFilteredData] = useState<typeof data>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const paciente = sessionStorage.getItem("id_paciente");
-
   useEffect(() => {
     const fetchData = async () => {
-      if (!paciente) return;
+      if (!id) return;
       try {
         //@ts-ignore
-        const dfetch = await fetchFunction(paciente);
+        const dfetch = await fetchFunction(id);
         setData(dfetch);
         setFilteredData(dfetch);
       } catch (error) {
@@ -51,15 +52,7 @@ export function ListaAntecedentes({
     };
 
     fetchData();
-  }, [paciente]);
-
-  useEffect(() => {
-    const lowerSearch = search.toLowerCase();
-    const filtered = data.filter((item) =>
-      item.name.toLowerCase().includes(lowerSearch)
-    );
-    setFilteredData(filtered);
-  }, [search, data]);
+  }, [id]);
 
   return (
     <div className="flex flex-col pt-5">
@@ -77,12 +70,13 @@ export function ListaAntecedentes({
       {isOpen && (
         <div className="flex flex-col shadow-md">
           {filteredData.map((item) => (
-            <HCardAntecedente
+            <HCardView
               path={path}
+              prescription=""
               key={item.id}
-              fecha={item.date}
-              description={item.description}
-              name={item.name}
+              title={item.diagnosis}
+              notes={item.notes}
+              date={item.date}
               id={item.id}
             />
           ))}
@@ -92,7 +86,7 @@ export function ListaAntecedentes({
               navigate(`${path}/new`);
             }}
           >
-            <p className="pr-2">Nueva {typeSingular}</p> <SquarePlus />
+            <p className="pr-2">Nuevo {typeSingular}</p> <SquarePlus />
           </div>
         </div>
       )}

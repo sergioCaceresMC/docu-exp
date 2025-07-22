@@ -10,6 +10,7 @@ type FetchFunction = (
     id: string;
     diagnosis: string;
     date: string;
+    consultaId: string;
   }[]
 >;
 
@@ -29,11 +30,11 @@ export function ListaDiagnostico({
   fetchFunction,
 }: ListaConsultasProps) {
   const [data, setData] = useState<
-    { id: string; diagnosis: string; date: string }[]
+    { id: string; diagnosis: string; date: string; consultaId: string }[]
   >([]);
 
   const [filteredData, setFilteredData] = useState<
-    { id: string; diagnosis: string; date: string }[]
+    { id: string; diagnosis: string; date: string; consultaId: string }[]
   >([]);
   const paciente = sessionStorage.getItem("id_paciente");
 
@@ -69,6 +70,7 @@ export function ListaDiagnostico({
     <div className="flex flex-col gap-2">
       {filteredData.map((item) => (
         <HCard
+          id_path={item.consultaId}
           path={path}
           key={item.id}
           fecha={item.date}

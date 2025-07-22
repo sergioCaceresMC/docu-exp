@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { Searcher } from "../components/layout/Searcher";
-import { Sidebar } from "../components/layout/Sidebar";
-import { ListaLaboratorios } from "../components/ListarEntidades/ListaLaboratorios";
+import { Searcher } from "../../components/layout/Searcher";
+import { Sidebar } from "../../components/layout/Sidebar";
+import { ListaLaboratorios } from "../../components/ListarEntidades/ListaLaboratorios";
+import { BotonAgregar } from "../../components/Forms/BotonAgregar";
 
 export default function Laboratorios() {
   //Métodos de búsqueda
   const [from, setFrom] = useState(new Date("December 1, 1900 03:24:00"));
-  const [to, setTo] = useState(new Date(Date.now() + 3600 * 1000 * 24));
+  const [to, setTo] = useState(new Date("December 1, 3900 03:24:00"));
   const [search, setSearch] = useState("");
 
   return (
@@ -19,7 +20,7 @@ export default function Laboratorios() {
           onChangeSearch={setSearch}
         />
         <ListaLaboratorios
-          path="/controles"
+          path="/laboratorios"
           search={search}
           from={from}
           to={to}
@@ -28,6 +29,8 @@ export default function Laboratorios() {
             window.exLaboratorio.getLaboratoriosByPacienteAndDate
           }
         />
+
+        <BotonAgregar path={"/laboratorios/new"} text="Nuevo examen" />
       </div>
     </>
   );

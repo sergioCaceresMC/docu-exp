@@ -1,7 +1,7 @@
 import { SquarePen, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export function HCard({
+export function HCardViewControles({
   fecha,
   text,
   id,
@@ -27,13 +27,13 @@ export function HCard({
     <div
       id={id}
       title="Ir a consulta..."
-      className="flex shadow-md inset-shadow-2xs hover:bg-gray-50 hover:cursor-pointer rounded-lg"
+      className="flex border-t border-gray-200 hover:bg-gray-50 hover:cursor-pointer"
       onClick={() => {
         navigate(`${path}/${id_path}`);
       }}
     >
       <p className=" py-5 px-5 whitespace-nowrap">{formatted}</p>
-      <p className="flex-1 px-6 py-5 border-l border-gray-300 whitespace-nowrap overflow-hidden text-ellipsis">
+      <p className="flex-1 px-6 py-5 border-l border-gray-200 whitespace-nowrap overflow-hidden text-ellipsis">
         {text}
       </p>
       <div className="px-3 py-4 flex whitespace-nowrap">

@@ -34,7 +34,7 @@ export function Searcher({
                 const value = e.target.value;
                 const date = value
                   ? new Date(value)
-                  : new Date("December 1, 1900 03:24:00");
+                  : new Date("December 1, 1 03:24:00");
                 onChangeFrom({
                   target: { value: date.toISOString().split("T")[0] },
                 } as any);
@@ -56,7 +56,7 @@ export function Searcher({
                 const value = e.target.value;
                 const date = value
                   ? new Date(value)
-                  : new Date(Date.now() + 3600 * 1000 * 24);
+                  : new Date("December 1, 3000 03:24:00");
                 onChangeTo({
                   target: { value: date.toISOString().split("T")[0] },
                 } as any);

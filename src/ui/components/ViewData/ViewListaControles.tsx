@@ -1,63 +1,68 @@
 import { useEffect, useState } from "react";
-import { HCardAntecedente } from "../Cards/HCardAntecedente";
 import { ChevronDown, ChevronUp, SquarePlus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { HCardViewControles } from "./HCardViewControles";
 
 type FetchFunction = (id: string) => Promise<
   {
     id: string;
-    name: string;
-    description: string;
+    reason: string;
     date: string;
   }[]
 >;
 
-type ListaAntecedentesProps = {
-  type: string;
-  typeSingular: string;
+type ListaConsultasProps = {
   path: string;
+  type: string;
+  id: any;
+  typeSingular: string;
   search: string;
   fetchFunction: FetchFunction;
 };
 
-export function ListaAntecedentes({
-  type,
-  typeSingular = "vacuna",
+export function ViewListaControles({
   search,
+  type,
+  id,
+  typeSingular,
   path,
   fetchFunction,
-}: ListaAntecedentesProps) {
+}: ListaConsultasProps) {
+  const navigate = useNavigate();
+
   const [data, setData] = useState<
-    { id: string; name: string; description: string; date: string }[]
+    { id: string; reason: string; date: string }[]
   >([]);
 
-  const navigate = useNavigate();
-  const [filteredData, setFilteredData] = useState<typeof data>([]);
+  const [filteredData, setFilteredData] = useState<
+    { id: string; reason: string; date: string }[]
+  >([]);
   const [isOpen, setIsOpen] = useState(false);
-
-  const paciente = sessionStorage.getItem("id_paciente");
-
   useEffect(() => {
     const fetchData = async () => {
-      if (!paciente) return;
+      if (!id) return;
+
       try {
         //@ts-ignore
-        const dfetch = await fetchFunction(paciente);
+        const dfetch = await fetchFunction(id);
         setData(dfetch);
-        setFilteredData(dfetch);
+        setFilteredData(dfetch); // Inicialmente sin filtro
       } catch (error) {
         console.error("Error al obtener consultas:", error);
       }
     };
 
     fetchData();
-  }, [paciente]);
+  }, [id]);
 
+  // Filtrar cuando cambia `search`
   useEffect(() => {
     const lowerSearch = search.toLowerCase();
+
     const filtered = data.filter((item) =>
-      item.name.toLowerCase().includes(lowerSearch)
+      item.reason.toLowerCase().includes(lowerSearch)
     );
+
     setFilteredData(filtered);
   }, [search, data]);
 
@@ -77,12 +82,12 @@ export function ListaAntecedentes({
       {isOpen && (
         <div className="flex flex-col shadow-md">
           {filteredData.map((item) => (
-            <HCardAntecedente
+            <HCardViewControles
+              id_path={item.id}
               path={path}
               key={item.id}
               fecha={item.date}
-              description={item.description}
-              name={item.name}
+              text={item.reason}
               id={item.id}
             />
           ))}
@@ -92,7 +97,7 @@ export function ListaAntecedentes({
               navigate(`${path}/new`);
             }}
           >
-            <p className="pr-2">Nueva {typeSingular}</p> <SquarePlus />
+            <p className="pr-2">Nuevo {typeSingular}</p> <SquarePlus />
           </div>
         </div>
       )}

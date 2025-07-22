@@ -1,6 +1,6 @@
-import { Sidebar } from "../components/layout/Sidebar";
-import { ViewPaciente } from "../components/ViewData/ViewPaciente";
-import { ListaAntecedentes } from "../components/ListarEntidades/ListaAntecedente";
+import { Sidebar } from "../../components/layout/Sidebar";
+import { ViewPaciente } from "../../components/ViewData/ViewPaciente";
+import { ListaAntecedentes } from "../../components/ListarEntidades/ListaAntecedente";
 
 export default function Paciente() {
   return (

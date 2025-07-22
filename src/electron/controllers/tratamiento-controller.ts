@@ -7,7 +7,13 @@ import { Op } from "sequelize";
 export async function get_tratamientos_by_consulta(id_consulta: string) {
   const consulta = await Consulta.findByPk(id_consulta);
   if (!consulta) throw new Error("Consulta not found");
-  const tratamientos = await consulta.getTratamientos();
+  const tratamientos = await Tratamiento.findAll({
+    where: {
+      //@ts-ignore
+      consultaId: consulta.id,
+    },
+    order: [["date", "ASC"]],
+  });
   return tratamientos;
 }
 
