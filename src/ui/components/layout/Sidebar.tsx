@@ -5,7 +5,6 @@ import {
   ClipboardCheck,
   SquareActivity,
   PillBottle,
-  LogOut,
   Users,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";

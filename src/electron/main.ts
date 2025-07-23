@@ -11,6 +11,8 @@ import { registerIpcExFisico } from "./ipc-controllers/ipc-examen-fisico.js";
 import { registerIpcExLaboratorio } from "./ipc-controllers/ipc-examen-laboratorio.js";
 import { registerIpcTratamiento } from "./ipc-controllers/ipc-tratamiento.js";
 import { registerIpcApi } from "./ipc-controllers/ipc-api.js";
+import { seed1 } from "./seeders/seed1.js";
+import { seed2 } from "./seeders/seed2.js";
 
 app.on("ready", async () => {
   const mainWindow = new BrowserWindow({

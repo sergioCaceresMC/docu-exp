@@ -25,7 +25,7 @@ export function ViewConsulta({ id }: { id: any }) {
       try {
         //@ts-ignore
         const dfetch = await window.consulta.getConsultaById(id);
-        console.log(dfetch);
+
         setData(dfetch);
       } catch (error) {
         console.error("Error al obtener datos del paciente:", error);
@@ -42,7 +42,7 @@ export function ViewConsulta({ id }: { id: any }) {
           {data.type.charAt(0).toUpperCase() + data.type.slice(1)}
         </h1>
       </div>
-      <div className="p-5 rounded-b-2xl inset-shadow-2xs border-2 border-teal-500 ">
+      <div className="p-5 inset-shadow-2xs border-2 border-teal-500 ">
         <div className="flex flex-col-reverse lg:flex-row lg:gap-10">
           <div className="flex flex-1 flex-col mb-3 gap-2">
             <label className="text-gray-500 text-lg">Motivo de consulta:</label>

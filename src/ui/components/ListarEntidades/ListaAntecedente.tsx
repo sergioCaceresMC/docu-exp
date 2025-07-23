@@ -78,7 +78,7 @@ export function ListaAntecedentes({
         <div className="flex flex-col shadow-md">
           {filteredData.map((item) => (
             <HCardAntecedente
-              path={path}
+              type={typeSingular}
               key={item.id}
               fecha={item.date}
               description={item.description}

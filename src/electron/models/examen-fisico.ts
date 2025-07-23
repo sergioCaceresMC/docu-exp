@@ -11,7 +11,7 @@ ExamenFisico.init(
       defaultValue: DataTypes.UUIDV4,
     },
     arterialPressure: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     cardiacFrecuency: {
@@ -19,6 +19,26 @@ ExamenFisico.init(
       allowNull: true,
     },
     respiratorRate: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    temperature: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    weight: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    height: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    abdominalcircunference: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    oxygensaturation: {
       type: DataTypes.FLOAT,
       allowNull: true,
     },

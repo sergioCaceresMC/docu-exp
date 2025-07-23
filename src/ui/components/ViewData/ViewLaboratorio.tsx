@@ -11,13 +11,6 @@ type LabData = {
   archivos: any;
 };
 
-type FileData = {
-  id: string;
-  name: string;
-  direction: string;
-  date: Date;
-};
-
 export function ViewLaboratorio({ id }: { id: any }) {
   const [data, setData] = useState<LabData>({
     id: "",

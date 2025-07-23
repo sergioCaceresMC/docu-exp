@@ -41,11 +41,14 @@ export async function seed2() {
     });
 
     await ExamenFisico.create({
-      blood_pressure: "115/75",
-      weight: 60,
-      height: 165,
-      pulse: 72,
-      temperature: 36.7,
+      arterialPressure: "120/80",
+      cardiacFrecuency: 62,
+      respiratorRate: 42,
+      weight: 70,
+      height: 175,
+      temperature: 36.5,
+      abdominalcircunference: 90,
+      oxygensaturation: 30,
       consultaId: consulta2.id,
     });
 
@@ -138,11 +141,14 @@ export async function seed2() {
     });
 
     await ExamenFisico.create({
-      blood_pressure: "110/70",
-      weight: 68,
-      height: 180,
-      pulse: 80,
-      temperature: 38.0,
+      arterialPressure: "120/80",
+      cardiacFrecuency: 62,
+      respiratorRate: 42,
+      weight: 70,
+      height: 175,
+      temperature: 36.5,
+      abdominalcircunference: 90,
+      oxygensaturation: 30,
       consultaId: consulta3.id,
     });
 
@@ -235,11 +241,14 @@ export async function seed2() {
     });
 
     await ExamenFisico.create({
-      blood_pressure: "122/82",
-      weight: 58,
-      height: 160,
-      pulse: 70,
-      temperature: 36.4,
+      arterialPressure: "120/80",
+      cardiacFrecuency: 62,
+      respiratorRate: 42,
+      weight: 70,
+      height: 175,
+      temperature: 36.5,
+      abdominalcircunference: 90,
+      oxygensaturation: 30,
       consultaId: consulta4.id,
     });
 

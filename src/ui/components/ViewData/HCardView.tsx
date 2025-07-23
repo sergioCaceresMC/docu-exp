@@ -51,7 +51,7 @@ export function HCardView({
           Notas
         </label>
         <p className="pb-3  whitespace-wrap overflow-auto text-ellipsis">
-          {notes}
+          {notes || "--"}
         </p>
         {prescription && prescription !== "" ? (
           <>

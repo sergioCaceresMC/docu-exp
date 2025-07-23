@@ -29,8 +29,10 @@ export default function Controles() {
             window.consulta.getControlesByPacienteAndDate
           }
         />
-
-        <BotonAgregar path={"/consultas/new"} />
+        {
+          //@ts-ignore
+          <BotonAgregar path={"/consultas/new"} />
+        }
       </div>
     </>
   );

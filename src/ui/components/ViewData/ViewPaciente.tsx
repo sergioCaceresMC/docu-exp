@@ -1,5 +1,8 @@
 import { SquarePen, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { ConfirmModal } from "../Forms/ConfirmModal";
+import Alert from "../Forms/AlertProp";
+import { useNavigate } from "react-router-dom";
 
 type FetchFunction = (id: string) => Promise<
   {
@@ -23,6 +26,7 @@ type PacienteData = {
 };
 
 export function ViewPaciente() {
+  const navigate = useNavigate();
   const paciente = sessionStorage.getItem("id_paciente");
   const [data, setData] = useState<PacienteData>({
     id: "",
@@ -34,6 +38,12 @@ export function ViewPaciente() {
     address: "",
   });
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [alerta, setAlerta] = useState<{
+    type: "success" | "error" | "info";
+    message: string;
+  } | null>(null);
+
   useEffect(() => {
     const fetchData = async () => {
       if (!paciente) return;
@@ -41,7 +51,7 @@ export function ViewPaciente() {
       try {
         //@ts-ignore
         const dfetch = await window.paciente.getPacienteById(paciente);
-        console.log(dfetch);
+
         setData(dfetch);
       } catch (error) {
         console.error("Error al obtener datos del paciente:", error);
@@ -51,8 +61,32 @@ export function ViewPaciente() {
     fetchData();
   }, [paciente]);
 
+  async function handleDelete() {
+    //@ts-ignore
+    await window.paciente.deletePaciente(paciente);
+
+    setAlerta({ type: "success", message: "El paciente ha sido borrado" });
+    navigate("/");
+    setModalOpen(false);
+  }
+
   return (
     <>
+      {alerta && (
+        <Alert
+          type={alerta.type}
+          message={alerta.message}
+          onClose={() => setAlerta(null)}
+        />
+      )}
+
+      <ConfirmModal
+        isOpen={modalOpen}
+        message="¿Desea borrar el paciente y todos los datos relacionados de forma permanente?"
+        onConfirm={handleDelete}
+        onCancel={() => setModalOpen(false)}
+      />
+
       <div className="p-5 rounded-2xl inset-shadow-2xs shadow-md">
         <h1 className="text-3xl font-semibold text-gray-800 mb-3">
           {data.name}
@@ -89,7 +123,10 @@ export function ViewPaciente() {
           <button className="px-3 py-1 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-500 transition duration-150 ease-in-out hover:cursor-pointer flex">
             <SquarePen /> <span className="pl-2">Editar paciente</span>
           </button>
-          <button className="ml-2 px-3 py-1 font-medium text-white bg-[#ff0000] rounded-md hover:bg-red-600 focus:outline-none focus:shadow-outline-red active:bg-[#ff0000] transition duration-150 ease-in-out flex hover:cursor-pointer">
+          <button
+            onClick={() => setModalOpen(true)}
+            className="ml-2 px-3 py-1 font-medium text-white bg-[#ff0000] rounded-md hover:bg-red-600 focus:outline-none focus:shadow-outline-red active:bg-[#ff0000] transition duration-150 ease-in-out flex hover:cursor-pointer"
+          >
             <Trash2 /> <span className="pl-2">Borrar paciente</span>
           </button>
         </div>

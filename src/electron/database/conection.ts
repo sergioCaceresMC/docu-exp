@@ -6,7 +6,7 @@ export async function connectDB() {
   //Creamos la base de datos en /database y nos conectamos a ella
   try {
     make_relations();
-    await sequelize.sync(); //{ alter: true });
+    await sequelize.sync();
     console.log("Connection has been established successfully.");
     console.log("Relations has been established successfully.");
   } catch (error) {

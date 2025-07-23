@@ -45,11 +45,14 @@ export async function seed1() {
 
     // 3. Examen físico
     await ExamenFisico.create({
-      blood_pressure: "120/80",
+      arterialPressure: "120/80",
+      cardiacFrecuency: 62,
+      respiratorRate: 42,
       weight: 70,
       height: 175,
-      pulse: 75,
       temperature: 36.5,
+      abdominalcircunference: 90,
+      oxygensaturation: 30,
       consultaId: consulta.id,
     });
 
