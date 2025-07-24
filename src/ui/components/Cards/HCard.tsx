@@ -36,16 +36,6 @@ export function HCard({
       <p className="flex-1 px-6 py-5 border-l border-gray-300 whitespace-nowrap overflow-hidden text-ellipsis">
         {text}
       </p>
-      <div className="px-3 py-4 flex whitespace-nowrap">
-        <button className="px-1 py-1 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-500 transition duration-150 ease-in-out hover:cursor-pointer flex">
-          <SquarePen />{" "}
-          <span className="hidden lg:inline-block lg:px-2">Editar</span>
-        </button>
-        <button className="ml-2 px-1 py-1 font-medium text-white bg-[#ff0000] rounded-md hover:bg-red-600 focus:outline-none focus:shadow-outline-red active:bg-[#ff0000] transition duration-150 ease-in-out flex hover:cursor-pointer">
-          <Trash2 />{" "}
-          <span className=" hidden lg:inline-block lg:px-2">Eliminar</span>
-        </button>
-      </div>
     </div>
   );
 }

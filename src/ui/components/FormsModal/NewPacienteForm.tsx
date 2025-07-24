@@ -1,7 +1,6 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import Alert from "../Alertas/AlertProp";
 
 export function NewPacienteForm() {

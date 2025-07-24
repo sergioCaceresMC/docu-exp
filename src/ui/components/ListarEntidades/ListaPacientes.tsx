@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { HCard } from "../Cards/HCard";
 import { HCardPaciente } from "../Cards/HCardPaciente";
 
 type FetchFunction = (

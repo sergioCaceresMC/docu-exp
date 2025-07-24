@@ -44,7 +44,7 @@ export function CardModalAntecedentes({
 
           <div className="mt-6 flex-col">
             <label className="text-gray-500 text-lg ">Descripción:</label>
-            <p className="text-gray-800 text-lg">{description}</p>
+            <p className="text-gray-800 text-lg">{description || "--"}</p>
           </div>
 
           <div className="mt-6 flex justify-end space-x-4">

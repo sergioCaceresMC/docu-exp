@@ -12,7 +12,7 @@ export function HCardViewFiles({
   return (
     <div
       id={id}
-      title="Ir a consulta..."
+      title={name}
       className="grid grid-cols-[150px_200px_1fr_auto] md:grid-cols-[150px_300px_1fr_auto] lg:grid-cols-[150px_400px_1fr_auto] items-center border-b border-teal-600 hover:bg-gray-50 hover:cursor-pointer"
       onClick={async () => {
         //@ts-ignore
@@ -23,7 +23,9 @@ export function HCardViewFiles({
           : "";
       }}
     >
-      <p className=" py-5 px-5 whitespace-nowrap">{name}</p>
+      <p className=" py-5 px-5 whitespace-nowrap truncate overflow-hidden">
+        {name}
+      </p>
       <p className="flex-1 px-6 py-5 border-l border-teal-600 whitespace-nowrap overflow-hidden text-ellipsis">
         {dir}
       </p>

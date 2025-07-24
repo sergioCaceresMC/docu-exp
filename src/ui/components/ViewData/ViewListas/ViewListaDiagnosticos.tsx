@@ -26,7 +26,6 @@ export function ViewListaDiagnosticos({
   id,
   type,
   typeSingular = "vacuna",
-  search,
   path,
   fetchFunction,
 }: ListaAntecedentesProps) {

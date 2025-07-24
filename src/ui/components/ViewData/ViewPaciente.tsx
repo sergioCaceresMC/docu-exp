@@ -1,6 +1,6 @@
 import { SquarePen, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { ConfirmModal } from "../FormsModal/ConfirmModal";
+import { ConfirmModal } from "../Alertas/ConfirmModal";
 import Alert from "../Alertas/AlertProp";
 import { useNavigate } from "react-router-dom";
 

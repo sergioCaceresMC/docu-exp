@@ -65,8 +65,8 @@ export function registerIpcAntecedentes() {
   });
 
   ipcMain.handle("updateAlergia", async (event, { id, data }) => {
-    const vacunas = await antecedentes.get_vacunas_paciente(id);
-    return vacunas.map((p) => p.toJSON());
+    const vacunas = await antecedentes.update_alergia_by_id(id, data);
+    return vacunas;
   });
 
   ipcMain.handle("deleteAlergia", async (event, { id }) => {

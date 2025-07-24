@@ -79,10 +79,12 @@ export function ViewLaboratorio({ id }: { id: any }) {
             Archivos:
           </label>
           <div className="border-teal-600 border border-b-0 mt-5">
-            <div className="grid grid-cols-[150px_200px_1fr_auto] lg:grid-cols-[150px_400px_1fr_auto] bg-teal-500 text-white items-center">
-              <p className=" py-2 px-5 whitespace-nowrap">nombre</p>
+            <div className="grid grid-cols-[150px_200px_1fr_auto] md:grid-cols-[150px_300px_1fr_auto] lg:grid-cols-[150px_400px_1fr_auto] border-b bg-teal-500 text-white items-center ">
+              <p className=" py-2 px-5 whitespace-nowrap truncate overflow-hidden">
+                Archivo:
+              </p>
               <p className="flex-1 px-6 py-2 border-l border-teal-600 whitespace-nowrap overflow-hidden text-ellipsis">
-                ruta
+                Ruta:
               </p>
             </div>
             {data.archivos?.map((item: { dataValues: any }) => {
