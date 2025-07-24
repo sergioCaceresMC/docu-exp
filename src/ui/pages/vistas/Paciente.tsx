@@ -1,6 +1,6 @@
-import { Sidebar } from "../../components/layout/Sidebar";
+import { Sidebar } from "../../components/Layout/Sidebar";
 import { ViewPaciente } from "../../components/ViewData/ViewPaciente";
-import { ListaAntecedentes } from "../../components/ListarEntidades/ListaAntecedente";
+import { ListaAntecedentes } from "../../components/ViewData/ViewListas/ListaAntecedente";
 
 export default function Paciente() {
   return (
@@ -9,40 +9,52 @@ export default function Paciente() {
       <div className="ml-20 lg:ml-50 mt-0 h-full p-10">
         <ViewPaciente />
         <ListaAntecedentes
+          delFunction={
+            //@ts-ignore
+            window.antecedentes.deleteVacunaById
+          }
           type={"vacunas"}
           typeSingular="vacuna"
           path={"/vacunas"}
-          search={""}
           fetchFunction={
             //@ts-ignore
             window.antecedentes.getVacunasByPaciente
           }
         />
         <ListaAntecedentes
+          delFunction={
+            //@ts-ignore
+            window.antecedentes.deleteAlergiaById
+          }
           type={"alergias"}
           typeSingular="alergia"
           path={"/alergias"}
-          search={""}
           fetchFunction={
             //@ts-ignore
             window.antecedentes.getAlergiasByPaciente
           }
         />
         <ListaAntecedentes
+          delFunction={
+            //@ts-ignore
+            window.antecedentes.deleteCirugiaById
+          }
           type={"cirugías"}
           typeSingular="cirugía"
           path={"/cirugia"}
-          search={""}
           fetchFunction={
             //@ts-ignore
             window.antecedentes.getCirugiasPaciente
           }
         />
         <ListaAntecedentes
+          delFunction={
+            //@ts-ignore
+            window.antecedentes.deleteEnfermedadById
+          }
           type={"enfermedades"}
           typeSingular="enfermedad"
           path={"/enfermedades"}
-          search={""}
           fetchFunction={
             //@ts-ignore
             window.antecedentes.getEnfermedadesPaciente

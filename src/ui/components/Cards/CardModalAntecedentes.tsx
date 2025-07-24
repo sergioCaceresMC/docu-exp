@@ -1,11 +1,9 @@
 type ConfirmModalProps = {
   isOpen: boolean;
-  message: string;
   fecha: string;
   name: string;
   description: string;
   type: string;
-  onConfirm: () => void;
   onCancel: () => void;
 };
 
@@ -15,8 +13,6 @@ export function CardModalAntecedentes({
   description,
   type,
   isOpen,
-  message,
-  onConfirm,
   onCancel,
 }: ConfirmModalProps) {
   if (!isOpen) return null;

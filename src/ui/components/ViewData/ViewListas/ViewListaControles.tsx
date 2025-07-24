@@ -1,58 +1,52 @@
 import { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp, SquarePlus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { HCardView } from "./HCardView";
+import { HCardViewControles } from "../ViewCards/HCardViewControles";
 
 type FetchFunction = (id: string) => Promise<
   {
     id: string;
-    tratment: string;
-    notes: string;
-    prescription: string;
-    description: string;
+    reason: string;
     date: string;
   }[]
 >;
 
-type ListaAntecedentesProps = {
-  id: any;
-  type: string;
-  typeSingular: string;
+type ListaConsultasProps = {
   path: string;
+  type: string;
+  id: any;
+  typeSingular: string;
   search: string;
   fetchFunction: FetchFunction;
 };
 
-export function ViewListaTratamientos({
-  id,
-  type,
-  typeSingular = "vacuna",
+export function ViewListaControles({
   search,
+  type,
+  id,
+  typeSingular,
   path,
   fetchFunction,
-}: ListaAntecedentesProps) {
+}: ListaConsultasProps) {
+  const navigate = useNavigate();
+
   const [data, setData] = useState<
-    {
-      id: string;
-      tratment: string;
-      notes: string;
-      date: string;
-      prescription: string;
-    }[]
+    { id: string; reason: string; date: string }[]
   >([]);
 
-  const navigate = useNavigate();
-  const [filteredData, setFilteredData] = useState<typeof data>([]);
+  const [filteredData, setFilteredData] = useState<
+    { id: string; reason: string; date: string }[]
+  >([]);
   const [isOpen, setIsOpen] = useState(false);
-
   useEffect(() => {
     const fetchData = async () => {
       if (!id) return;
+
       try {
         //@ts-ignore
         const dfetch = await fetchFunction(id);
         setData(dfetch);
-        setFilteredData(dfetch);
+        setFilteredData(dfetch); // Inicialmente sin filtro
       } catch (error) {
         console.error("Error al obtener consultas:", error);
       }
@@ -60,6 +54,17 @@ export function ViewListaTratamientos({
 
     fetchData();
   }, [id]);
+
+  // Filtrar cuando cambia `search`
+  useEffect(() => {
+    const lowerSearch = search.toLowerCase();
+
+    const filtered = data.filter((item) =>
+      item.reason.toLowerCase().includes(lowerSearch)
+    );
+
+    setFilteredData(filtered);
+  }, [search, data]);
 
   return (
     <div className="flex flex-col pt-5">
@@ -77,13 +82,12 @@ export function ViewListaTratamientos({
       {isOpen && (
         <div className="flex flex-col shadow-md">
           {filteredData.map((item) => (
-            <HCardView
-              prescription={item.prescription}
+            <HCardViewControles
+              id_path={item.id}
               path={path}
               key={item.id}
-              title={item.tratment}
-              notes={item.notes}
-              date={item.date}
+              fecha={item.date}
+              text={item.reason}
               id={item.id}
             />
           ))}

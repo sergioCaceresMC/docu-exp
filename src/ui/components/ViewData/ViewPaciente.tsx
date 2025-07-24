@@ -1,7 +1,7 @@
 import { SquarePen, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { ConfirmModal } from "../Forms/ConfirmModal";
-import Alert from "../Forms/AlertProp";
+import { ConfirmModal } from "../FormsModal/ConfirmModal";
+import Alert from "../Alertas/AlertProp";
 import { useNavigate } from "react-router-dom";
 
 type FetchFunction = (id: string) => Promise<

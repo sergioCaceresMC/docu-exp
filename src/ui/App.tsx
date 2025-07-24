@@ -5,11 +5,11 @@ import Consultas from "./pages/principales/Consultas";
 import Diagnosticos from "./pages/principales/Diagnosticos";
 import Tratamientos from "./pages/principales/Tratamientos";
 import Controles from "./pages/principales/Controles";
-import Paciente from "./pages/principales/Paciente";
+import Paciente from "./pages/vistas/Paciente";
 import Laboratorios from "./pages/principales/Laboratorios";
 import ConsultaViewPage from "./pages/vistas/ConsultaViewPage";
 import LaboratorioViewPage from "./pages/vistas/LaboratorioViewPage";
-import { DataBase } from "./pages/principales/database";
+import { DataBase } from "./pages/principales/Database";
 
 function App() {
   return (

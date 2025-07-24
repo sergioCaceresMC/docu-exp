@@ -1,4 +1,4 @@
-import { SidebarMenu } from "../../components/layout/SidebarMenu";
+import { SidebarMenu } from "../../components/Layout/SidebarMenu";
 
 export function DataBase() {
   return (

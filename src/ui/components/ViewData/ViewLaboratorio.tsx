@@ -1,6 +1,6 @@
 import { SquarePen, SquarePlus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { HCardViewFiles } from "./HCardViewFiles";
+import { HCardViewFiles } from "./ViewCards/HCardViewFiles";
 
 type LabData = {
   id: string;

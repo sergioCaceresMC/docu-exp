@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Searcher } from "../../components/layout/Searcher";
+import { Searcher } from "../../components/Layout/Searcher";
 import { ListaPacientes } from "../../components/ListarEntidades/ListaPacientes";
-import { SidebarMenu } from "../../components/layout/SidebarMenu";
-import { NewPacienteForm } from "../../components/Forms/NewPacienteForm";
+import { SidebarMenu } from "../../components/Layout/SidebarMenu";
+import { NewPacienteForm } from "../../components/FormsModal/NewPacienteForm";
 
 export function Home() {
   //Métodos de búsqueda

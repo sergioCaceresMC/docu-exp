@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Sidebar } from "../../components/layout/Sidebar";
+import { Sidebar } from "../../components/Layout/Sidebar";
 import { ViewLaboratorio } from "../../components/ViewData/ViewLaboratorio";
 
 export default function LaboratorioViewPage() {

@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Sidebar } from "../../components/layout/Sidebar";
-import { ViewListaDiagnosticos } from "../../components/ViewData/ViewListaDiagnosticos";
-import { ViewListaTratamientos } from "../../components/ViewData/ViewListaTratamientos";
-import { ViewListaControles } from "../../components/ViewData/ViewListaControles";
+import { Sidebar } from "../../components/Layout/Sidebar";
+import { ViewListaDiagnosticos } from "../../components/ViewData/ViewListas/ViewListaDiagnosticos";
+import { ViewListaTratamientos } from "../../components/ViewData/ViewListas/ViewListaTratamientos";
+import { ViewListaControles } from "../../components/ViewData/ViewListas/ViewListaControles";
 import { ViewConsulta } from "../../components/ViewData/ViewConsulta";
 import { ViewExFisico } from "../../components/ViewData/ViewExFisico";
 import { useEffect, useState } from "react";

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp, SquarePlus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { HCardView } from "./HCardView";
+import { HCardView } from "../ViewCards/HCardView";
 
 type FetchFunction = (id: string) => Promise<
   {

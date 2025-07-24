@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Searcher } from "../../components/layout/Searcher";
-import { Sidebar } from "../../components/layout/Sidebar";
+import { Searcher } from "../../components/Layout/Searcher";
+import { Sidebar } from "../../components/Layout/Sidebar";
 import { ListaLaboratorios } from "../../components/ListarEntidades/ListaLaboratorios";
-import { BotonAgregar } from "../../components/Forms/BotonAgregar";
+import { BotonAgregar } from "../../components/Layout/BotonAgregar";
 
 export default function Laboratorios() {
   //Métodos de búsqueda
