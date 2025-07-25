@@ -276,6 +276,12 @@ electron.contextBridge.exposeInMainWorld("electronAPI", {
   ): Promise<{ success: boolean; error?: string }> =>
     ipcRenderer.invoke("open-file", absolutePath),
 
+  selectFileAndCreate: (labId: string) =>
+    ipcRenderer.invoke("select-file-and-save", labId),
+
+  selectFileAndUpdate: (fileId: string) =>
+    ipcRenderer.invoke("select-file-and-update", fileId),
+
   selectFile: () => ipcRenderer.invoke("select-any-file"),
 
   selectDB: () => ipcRenderer.invoke("select-database"),

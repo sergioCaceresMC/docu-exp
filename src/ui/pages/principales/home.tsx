@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Searcher } from "../../components/Layout/Searcher";
 import { ListaPacientes } from "../../components/ListarEntidades/ListaPacientes";
 import { SidebarMenu } from "../../components/Layout/SidebarMenu";
-import { NewPacienteForm } from "../../components/FormsModal/NewPacienteForm";
+import { NewPacienteForm } from "../../components/FormsModal/Paciente/NewPacienteForm";
 
 export function Home() {
   //Métodos de búsqueda

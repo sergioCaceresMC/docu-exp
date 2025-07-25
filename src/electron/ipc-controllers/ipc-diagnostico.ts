@@ -27,12 +27,12 @@ export function registerIpcDiagnostico() {
 
   ipcMain.handle("createDiagnostico", async (event, { id, data }) => {
     const diagnosticos = await diagnostico.create_diagnostico(id, data);
-    return diagnosticos;
+    return diagnosticos.dataValues;
   });
 
   ipcMain.handle("updateDiagnostico", async (event, { id, data }) => {
     const diagnosticos = await diagnostico.update_diagnostico(id, data);
-    return diagnosticos;
+    return diagnosticos.dataValues;
   });
 
   ipcMain.handle("deleteDiagnostico", async (event, { id }) => {

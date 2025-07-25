@@ -58,12 +58,13 @@ export function registerIpcConsulta() {
 
   ipcMain.handle("createConsultaByPaciente", async (event, { id, data }) => {
     const controles = await consulta.create_consulta_by_paciente(id, data);
-    return controles;
+    return controles.dataValues;
   });
 
   ipcMain.handle("createConstrolByConsulta", async (event, { id, data }) => {
     const controles = await consulta.create_control_by_consulta(id, data);
-    return controles;
+    //@ts-ignore
+    return controles.dataValues;
   });
 
   ipcMain.handle("updateConsultaById", async (event, { id, data }) => {

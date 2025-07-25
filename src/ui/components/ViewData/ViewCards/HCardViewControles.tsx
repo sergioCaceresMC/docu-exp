@@ -1,4 +1,4 @@
-import { SquarePen, Trash2 } from "lucide-react";
+import { Eye, SquarePen, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export function HCardViewControles({
@@ -37,13 +37,8 @@ export function HCardViewControles({
         {text}
       </p>
       <div className="px-3 py-4 flex whitespace-nowrap">
-        <button className="px-1 py-1 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-500 transition duration-150 ease-in-out hover:cursor-pointer flex">
-          <SquarePen />{" "}
-          <span className="hidden lg:inline-block lg:px-2">Editar</span>
-        </button>
-        <button className="ml-2 px-1 py-1 font-medium text-white bg-[#ff0000] rounded-md hover:bg-red-600 focus:outline-none focus:shadow-outline-red active:bg-[#ff0000] transition duration-150 ease-in-out flex hover:cursor-pointer">
-          <Trash2 />{" "}
-          <span className=" hidden lg:inline-block lg:px-2">Eliminar</span>
+        <button className="px-1 py-1 font-medium text-white bg-gray-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-gray-500 transition duration-150 ease-in-out hover:cursor-pointer flex">
+          <Eye /> <span className="hidden lg:inline-block lg:px-2">Ver</span>
         </button>
       </div>
     </div>

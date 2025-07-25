@@ -32,6 +32,8 @@ export function CreateAntecedenteModal({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+    // Si el campo es de fecha y se borra, no actualices el estado
+    if (name === "date" && value === "") return;
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -96,6 +98,7 @@ export function CreateAntecedenteModal({
                 onChange={handleChange}
                 className="border rounded px-3 py-2 text-gray-800"
                 required
+                maxLength={60}
               />
             </div>
             <div className="flex flex-col w-1/2">

@@ -7,9 +7,9 @@ interface AlertProps {
 }
 
 const colors = {
-  success: "bg-green-100 text-green-800 border-green-400",
-  error: "bg-red-100 text-red-800 border-red-400",
-  info: "bg-blue-100 text-blue-800 border-blue-400",
+  success: "bg-green-400 text-white border-green-400",
+  error: "bg-red-500 text-white border-red-600",
+  info: "bg-blue-400 text-white border-blue-400",
 };
 
 export default function Alert({ type = "info", message, onClose }: AlertProps) {

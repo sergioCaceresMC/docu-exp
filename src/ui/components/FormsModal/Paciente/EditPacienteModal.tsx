@@ -1,35 +1,42 @@
 import { useState } from "react";
 import Alert from "../../Alertas/AlertProp";
 
-type EditAntecedenteModal = {
-  fecha: string;
-  name: string;
-  description: string;
+type CreatePacienteModal = {
   id: string;
-  type: string;
+  name: string;
+  address: string;
+  gender: string;
+  dui: string;
+  birthday: Date;
+  phone: string;
   isOpen: boolean;
+  refresh: () => void;
   onConfirm: (id: string, data: any) => void;
   onCancel: () => void;
-  refresh: () => void;
 };
 
-export function EditAntecedenteModal({
-  fecha,
-  name,
-  description,
+export function EditPacienteModal({
   id,
-  type,
+  name,
+  address,
+  dui,
+  birthday,
+  gender,
+  phone,
   isOpen,
   refresh,
   onConfirm,
   onCancel,
-}: EditAntecedenteModal) {
+}: CreatePacienteModal) {
   if (!isOpen) return null;
 
   const [data, setData] = useState({
     name,
-    description,
-    date: fecha, // mantenemos la fecha como string para el input type="date"
+    address,
+    gender,
+    dui,
+    birthday,
+    phone,
   });
 
   const [alerta, setAlerta] = useState<{
@@ -53,20 +60,26 @@ export function EditAntecedenteModal({
         setAlerta({ type: "error", message: "El título no es válido" });
         throw new Error("El título no es válido");
       }
-      if (!data.date) {
+
+      if (!data.dui || data.dui === "") {
+        setAlerta({ type: "error", message: "El dui no es válido" });
+        throw new Error("El dui no es válido");
+      }
+
+      if (!data.birthday) {
         setAlerta({ type: "error", message: "La fecha no es válida" });
         throw new Error("La fecha no es válida");
       }
 
       if (!id) {
-        setAlerta({ type: "error", message: "El id no es válido" });
-        throw new Error("El id no es válido");
+        setAlerta({ type: "error", message: "El id_paciente no es válido" });
+        throw new Error("El id_paciente no es válido");
       }
 
       const res = await onConfirm(id, data);
 
       //@ts-ignore
-      if (res == 0) {
+      if (!res) {
         throw new Error("Error al conectar con la base de datos");
       }
       refresh();
@@ -98,7 +111,7 @@ export function EditAntecedenteModal({
           <div className="flex justify-between space-x-4">
             <div className="flex flex-col w-1/2">
               <label className="text-gray-500 text-lg mb-1">
-                {type.charAt(0).toUpperCase() + type.slice(1)}:
+                Nombre completo:
               </label>
               <input
                 type="text"
@@ -107,37 +120,92 @@ export function EditAntecedenteModal({
                 onChange={handleChange}
                 className="border rounded px-3 py-2 text-gray-800"
                 required
-                maxLength={60}
+                maxLength={100}
               />
             </div>
-
             <div className="flex flex-col w-1/2">
-              <label className="text-gray-500 text-lg mb-1">Fecha:</label>
+              <label className="text-gray-500 text-lg mb-1">
+                Fecha de nacimiento:
+              </label>
               <input
                 type="date"
-                name="date"
+                name="birthday"
                 value={
                   new Date(
-                    new Date(data.date).getTime() +
-                      Math.abs(new Date(data.date).getTimezoneOffset()) * 60000
+                    data.birthday instanceof Date
+                      ? data.birthday.getTime() +
+                        Math.abs(data.birthday.getTimezoneOffset()) * 60000
+                      : data.birthday
                   )
                     .toISOString()
                     .split("T")[0]
                 }
-                onChange={handleChange}
+                onChange={(e) =>
+                  setData((prev) => ({
+                    ...prev,
+                    date: new Date(e.target.value),
+                  }))
+                }
                 className="border rounded px-3 py-2 text-gray-800"
                 required
               />
             </div>
           </div>
 
+          <div className="flex justify-between space-x-4">
+            <div className="flex flex-col w-1/2 mt-5">
+              <label className="text-gray-500 text-lg mb-1">Teléfono:</label>
+              <input
+                type="text"
+                name="phone"
+                value={data.phone}
+                onChange={handleChange}
+                className="border rounded px-3 py-2 text-gray-800"
+                required
+                maxLength={30}
+              />
+            </div>
+
+            <div className="flex flex-col w-1/2 mt-5">
+              <label className="text-gray-500 text-lg mb-1">dui:</label>
+              <input
+                type="text"
+                name="dui"
+                value={data.dui}
+                onChange={handleChange}
+                className="border rounded px-3 py-2 text-gray-800"
+                required
+                maxLength={20}
+              />
+            </div>
+          </div>
+
+          <div className="col-span-3 sm:col-span-2 lg:col-span-2 xl:col-span-1 mt-5">
+            <label className="text-gray-500 text-lg mb-1">Sexo</label>
+            <select
+              name="gender"
+              value={data.gender}
+              onChange={(e) =>
+                setData((prev) => ({
+                  ...prev,
+                  gender: e.target.value,
+                }))
+              }
+              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+            >
+              <option value="F">F</option>
+              <option value="M">M</option>
+            </select>
+          </div>
+
           <div className="mt-6 flex flex-col">
-            <label className="text-gray-500 text-lg mb-1">Descripción:</label>
-            <textarea
-              name="description"
-              value={data.description}
+            <label className="text-gray-500 text-lg mb-1">Dirección:</label>
+            <input
+              type="text"
+              name="address"
+              value={data.address}
               onChange={handleChange}
-              className="border rounded px-3 py-2 text-gray-800 min-h-[100px]"
+              className="border rounded px-3 py-2 text-gray-800"
               required
             />
           </div>

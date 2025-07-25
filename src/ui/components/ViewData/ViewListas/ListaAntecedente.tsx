@@ -65,7 +65,7 @@ export function ListaAntecedentes({
         />
       ) : (
         <CreateAntecedenteModal
-          type={"pppp"}
+          type={"enfermedad"}
           isOpen={modalCreateOpen}
           onConfirm={createFunction}
           onCancel={() => setModalCreateOpen(false)}

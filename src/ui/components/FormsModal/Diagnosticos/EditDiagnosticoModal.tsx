@@ -3,22 +3,20 @@ import Alert from "../../Alertas/AlertProp";
 
 type EditAntecedenteModal = {
   fecha: string;
-  name: string;
-  description: string;
+  diagnosis: string;
+  notes: string;
   id: string;
-  type: string;
   isOpen: boolean;
   onConfirm: (id: string, data: any) => void;
   onCancel: () => void;
   refresh: () => void;
 };
 
-export function EditAntecedenteModal({
+export function EditDiagnosticoModal({
   fecha,
-  name,
-  description,
+  diagnosis,
+  notes,
   id,
-  type,
   isOpen,
   refresh,
   onConfirm,
@@ -27,8 +25,8 @@ export function EditAntecedenteModal({
   if (!isOpen) return null;
 
   const [data, setData] = useState({
-    name,
-    description,
+    diagnosis,
+    notes,
     date: fecha, // mantenemos la fecha como string para el input type="date"
   });
 
@@ -49,7 +47,7 @@ export function EditAntecedenteModal({
   async function confirm(e: any) {
     e.preventDefault();
     try {
-      if (!data.name || data.name === "") {
+      if (!data.diagnosis || data.diagnosis === "") {
         setAlerta({ type: "error", message: "El título no es válido" });
         throw new Error("El título no es válido");
       }
@@ -97,13 +95,11 @@ export function EditAntecedenteModal({
         >
           <div className="flex justify-between space-x-4">
             <div className="flex flex-col w-1/2">
-              <label className="text-gray-500 text-lg mb-1">
-                {type.charAt(0).toUpperCase() + type.slice(1)}:
-              </label>
+              <label className="text-gray-500 text-lg mb-1">Tratamiento:</label>
               <input
                 type="text"
-                name="name"
-                value={data.name}
+                name="diagnosis"
+                value={data.diagnosis}
                 onChange={handleChange}
                 className="border rounded px-3 py-2 text-gray-800"
                 required
@@ -132,10 +128,10 @@ export function EditAntecedenteModal({
           </div>
 
           <div className="mt-6 flex flex-col">
-            <label className="text-gray-500 text-lg mb-1">Descripción:</label>
+            <label className="text-gray-500 text-lg mb-1">Notas:</label>
             <textarea
-              name="description"
-              value={data.description}
+              name="notes"
+              value={data.notes}
               onChange={handleChange}
               className="border rounded px-3 py-2 text-gray-800 min-h-[100px]"
               required

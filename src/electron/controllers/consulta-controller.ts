@@ -2,6 +2,7 @@ import { Paciente } from "../models/paciente.js";
 import { Consulta } from "../models/consulta.js";
 import { Op } from "sequelize";
 import { Console } from "console";
+import { create_ex_fisico_by_consulta } from "./examen-fisico-controller.js";
 
 export async function get_consulta_by_id(id: string) {
   const consulta = await Consulta.findByPk(id);
@@ -104,12 +105,26 @@ export async function create_consulta_by_paciente(
   const new_consulta = Consulta.build({
     reason: data.reason,
     type: "consulta",
-    constent: data.content,
-    date: new Date(),
+    content: data.content,
+    date: data.date,
     pacienteId: id_paciente,
   });
 
-  return await new_consulta.save();
+  const consulta = await new_consulta.save();
+
+  //@ts-ignore
+  const examen = await create_ex_fisico_by_consulta(consulta.id, {
+    arterialPressure: null,
+    cardiacFrecuency: null,
+    respiratorRate: null,
+    temperature: null,
+    weight: null,
+    height: null,
+    abdominalcircunference: null,
+    oxygensaturation: null,
+  });
+
+  return consulta;
 }
 
 //71
@@ -117,15 +132,36 @@ export async function create_control_by_consulta(
   id_consulta: string,
   data: any
 ) {
+  const consulta = await Consulta.findByPk(id_consulta);
+  if (!consulta) throw new Error("Consulta not found");
+
+  //return await consulta?.addControl(new_control);
+
   const new_control = Consulta.build({
     reason: data.reason,
     type: "control",
-    constent: data.content,
-    date: new Date(),
+    content: data.content,
+    date: data.date,
+    parentConsultaId: id_consulta,
+    //@ts-ignore
+    pacienteId: consulta.pacienteId,
   });
-  const consulta = await Consulta.findByPk(id_consulta);
-  if (!consulta) throw new Error("Consulta not found");
-  return await consulta?.addControl(new_control);
+
+  const control = await new_control.save();
+
+  //@ts-ignore
+  const examen = await create_ex_fisico_by_consulta(control.id, {
+    arterialPressure: null,
+    cardiacFrecuency: null,
+    respiratorRate: null,
+    temperature: null,
+    weight: null,
+    height: null,
+    abdominalcircunference: null,
+    oxygensaturation: null,
+  });
+
+  return control;
 }
 
 //69 Actualizar consulta

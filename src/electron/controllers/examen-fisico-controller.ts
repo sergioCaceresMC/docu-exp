@@ -28,7 +28,10 @@ export async function create_ex_fisico_by_consulta(
   const consulta = await Consulta.findByPk(id_consulta);
   if (!consulta) throw new Error("Consulta not found");
 
-  const examen = await consulta?.createExamenFisico(data);
+  const examen = await ExamenFisico.create({
+    ...data,
+    consultaId: id_consulta,
+  });
   return examen;
 }
 

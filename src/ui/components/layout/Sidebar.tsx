@@ -57,7 +57,7 @@ export function Sidebar({ currentView }: { currentView: string }) {
     <>
       {/* Sidebar */}
       <div
-        className={`fixed top-auto left-0 h-full bg-green-600 text-white shadow-lg transition-transform z-40 
+        className={`fixed top-auto left-0 h-full bg-green-600 text-white shadow-lg transition-transform z-30 
          lg:w-50 w-19 p-4 flex flex-col gap-4
         ${open ? "translate-x-0" : "-translate-x-full"} 
         md:translate-x-0`}

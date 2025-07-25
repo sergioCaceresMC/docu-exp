@@ -1,5 +1,6 @@
 import { ChevronDown, ChevronUp, SquarePen, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { EditExFisicoModal } from "../FormsModal/Consulta/EditExamenFisicoModal";
 
 type PacienteData = {
   arterialPressure: string;
@@ -11,6 +12,7 @@ type PacienteData = {
   abdominalcircunference: number;
   oxygensaturation: number;
   consultaId: string;
+  id: "";
 };
 
 export function ViewExFisico({ id }: { id: any }) {
@@ -24,8 +26,11 @@ export function ViewExFisico({ id }: { id: any }) {
     abdominalcircunference: 0,
     oxygensaturation: 0,
     consultaId: "",
+    id: "",
   });
   const [isOpen, setIsOpen] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  const [isOpenModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,16 +53,37 @@ export function ViewExFisico({ id }: { id: any }) {
           abdominalcircunference: 0,
           oxygensaturation: 0,
           consultaId: "",
+          id: "",
         });
         console.error("Error al obtener datos del paciente:", error);
       }
     };
-
+    setRefresh(false);
     fetchData();
-  }, [id]);
+  }, [id, refresh]);
 
   return (
     <>
+      <EditExFisicoModal
+        data={{
+          arterialPressure: data.arterialPressure,
+          cardiacFrecuency: data.cardiacFrecuency,
+          respiratorRate: data.respiratorRate,
+          weight: data.weight,
+          height: data.height,
+          temperature: data.temperature,
+          abdominalcircunference: data.abdominalcircunference,
+          oxygensaturation: data.oxygensaturation,
+        }}
+        id={data.id}
+        refresh={() => setRefresh(true)}
+        isOpen={isOpenModal}
+        onConfirm={
+          //@ts-ignore
+          window.exFisico.updateExFisicoByConsulta
+        }
+        onCancel={() => setOpenModal(false)}
+      />
       <div
         onClick={() => setIsOpen(!isOpen)}
         className={`p-2 px-5 bg-teal-500 text-white flex items-center justify-between cursor-pointer ${
@@ -119,7 +145,10 @@ export function ViewExFisico({ id }: { id: any }) {
         </table>
 
         <div className=" pt-8 flex whitespace-nowrap">
-          <button className="px-3 py-1 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-500 transition duration-150 ease-in-out hover:cursor-pointer flex">
+          <button
+            onClick={() => setOpenModal(true)}
+            className="px-3 py-1 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-500 transition duration-150 ease-in-out hover:cursor-pointer flex"
+          >
             <SquarePen /> <span className="pl-2">Editar</span>
           </button>
         </div>

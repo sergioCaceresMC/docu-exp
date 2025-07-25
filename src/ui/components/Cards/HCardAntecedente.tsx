@@ -60,7 +60,6 @@ export function HCardAntecedente({
     });
 
     refresh();
-    //window.location.reload();
   }
 
   return (

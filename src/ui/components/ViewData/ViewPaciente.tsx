@@ -3,17 +3,7 @@ import { useEffect, useState } from "react";
 import { ConfirmModal } from "../Alertas/ConfirmModal";
 import Alert from "../Alertas/AlertProp";
 import { useNavigate } from "react-router-dom";
-
-type FetchFunction = (id: string) => Promise<
-  {
-    id: string;
-    name: string;
-    birthday: Date;
-    gender: string;
-    phone: string;
-    address: string;
-  }[]
->;
+import { EditPacienteModal } from "../FormsModal/Paciente/EditPacienteModal";
 
 type PacienteData = {
   id: string;
@@ -39,6 +29,8 @@ export function ViewPaciente() {
   });
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalEditOpen, setModalEditOpen] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [alerta, setAlerta] = useState<{
     type: "success" | "error" | "info";
     message: string;
@@ -57,9 +49,9 @@ export function ViewPaciente() {
         console.error("Error al obtener datos del paciente:", error);
       }
     };
-
+    setRefresh(false);
     fetchData();
-  }, [paciente]);
+  }, [paciente, refresh]);
 
   async function handleDelete() {
     //@ts-ignore
@@ -87,6 +79,23 @@ export function ViewPaciente() {
         onCancel={() => setModalOpen(false)}
       />
 
+      <EditPacienteModal
+        id={data.id}
+        name={data.name}
+        address={data.address}
+        gender={data.gender}
+        dui={data.dui}
+        birthday={data.birthday}
+        phone={data.phone}
+        isOpen={modalEditOpen}
+        refresh={() => setRefresh(true)}
+        onConfirm={
+          //@ts-ignore
+          window.paciente.updatePaciente
+        }
+        onCancel={() => setModalEditOpen(false)}
+      />
+
       <div className="p-5 rounded-2xl inset-shadow-2xs shadow-md">
         <h1 className="text-3xl font-semibold text-gray-800 mb-3">
           {data.name}
@@ -98,7 +107,7 @@ export function ViewPaciente() {
             <p className="text-lg">{data.dui}</p>
           </div>
           <div className="flex mb-3 gap-2">
-            <label className="text-gray-500 text-lg">Género:</label>
+            <label className="text-gray-500 text-lg">Sexo:</label>
             <p className="text-lg">{data.gender}</p>
           </div>
           <div className="flex mb-3 gap-2">
@@ -120,7 +129,10 @@ export function ViewPaciente() {
         </div>
 
         <div className=" pt-8 flex whitespace-nowrap">
-          <button className="px-3 py-1 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-500 transition duration-150 ease-in-out hover:cursor-pointer flex">
+          <button
+            onClick={() => setModalEditOpen(true)}
+            className="px-3 py-1 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-500 transition duration-150 ease-in-out hover:cursor-pointer flex"
+          >
             <SquarePen /> <span className="pl-2">Editar paciente</span>
           </button>
           <button

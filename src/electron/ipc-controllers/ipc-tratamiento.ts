@@ -27,12 +27,12 @@ export function registerIpcTratamiento() {
 
   ipcMain.handle("createTratamiento", async (event, { id, data }) => {
     const tratamientos = await tratamiento.create_tratamiento(id, data);
-    return tratamientos;
+    return tratamientos.dataValues;
   });
 
   ipcMain.handle("updateTratamiento", async (event, { id, data }) => {
     const tratamientos = await tratamiento.update_tratamiento(id, data);
-    return tratamientos;
+    return tratamientos.dataValues;
   });
 
   ipcMain.handle("deleteTratamiento", async (event, { id }) => {

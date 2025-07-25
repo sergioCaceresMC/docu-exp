@@ -1,6 +1,10 @@
 import { SquarePen, SquarePlus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { HCardViewFiles } from "./ViewCards/HCardViewFiles";
+import { useNavigate } from "react-router-dom";
+import Alert from "../Alertas/AlertProp";
+import { ConfirmModal } from "../Alertas/ConfirmModal";
+import { EditExamenModal } from "../FormsModal/ExLaboratorio/EditExamenModal";
 
 type LabData = {
   id: string;
@@ -21,6 +25,47 @@ export function ViewLaboratorio({ id }: { id: any }) {
     archivos: [],
   });
 
+  const safeFecha =
+    typeof data.date === "string"
+      ? data.date
+      : //@ts-ignore
+      data.date instanceof Date
+      ? //@ts-ignore
+        data.date.toISOString().split("T")[0]
+      : "";
+
+  const [aa, mm, dd] = safeFecha.split("-");
+  const formatted = `${dd}/${mm}/${aa?.slice(-2)}`;
+
+  const navigate = useNavigate();
+
+  const [refresh, setRefresh] = useState(false);
+
+  const [alerta, setAlerta] = useState<{
+    type: "success" | "error" | "info";
+    message: string;
+  } | null>(null);
+  const [modalDelOpen, setModalDelOpen] = useState(false);
+  const [modalEditOpen, setModalEditOpen] = useState(false);
+
+  async function delAntecedente() {
+    //@ts-ignore
+    const res = await window.exLaboratorio.deleteLaboratorio(id);
+
+    if (res == 0) {
+      setAlerta({
+        type: "error",
+        message: "Error al eliminar el examen",
+      });
+      return;
+    }
+    setAlerta({
+      type: "success",
+      message: "Examen de laboratorio eliminado exitosamente",
+    });
+    navigate("/laboratorios");
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       if (!id) return;
@@ -36,10 +81,41 @@ export function ViewLaboratorio({ id }: { id: any }) {
     };
 
     fetchData();
-  }, [id]);
+    setRefresh(false);
+  }, [id, refresh]);
 
   return (
     <>
+      {alerta && (
+        <Alert
+          type={alerta.type}
+          message={alerta.message}
+          onClose={() => setAlerta(null)}
+        />
+      )}
+
+      <ConfirmModal
+        isOpen={modalDelOpen}
+        message={`Se borrará el laboratorio "${data.name}" y las referencias indicadas, ¿Desea continuar?`}
+        onConfirm={delAntecedente}
+        onCancel={() => setModalDelOpen(false)}
+      />
+
+      <EditExamenModal
+        isOpen={modalEditOpen}
+        onConfirm={
+          //@ts-ignore
+          window.exLaboratorio.updateLaboratorio
+        }
+        onCancel={() => setModalEditOpen(false)}
+        id={data.id}
+        name={data.name}
+        content={data.content}
+        laboratory={data.laboratory}
+        fecha={data.date}
+        refresh={() => setRefresh(true)}
+      />
+
       <div className="p-5 rounded-t-2xl bg-teal-500">
         <h1 className="text-3xl font-semibold text-white">
           {data.name.charAt(0).toUpperCase() + data.name.slice(1)}
@@ -54,8 +130,10 @@ export function ViewLaboratorio({ id }: { id: any }) {
             </p>
           </div>
           <div className="flex flex-col mb-3 pr-5 gap-2">
-            <label className="text-gray-500 text-lg">Fecha de examen:</label>
-            <p className="text-lg ">{data.date.toDateString()}</p>
+            <label className="text-gray-500 text-lg">
+              Fecha de laboratorio:
+            </label>
+            <p className="text-lg ">{formatted}</p>
           </div>
         </div>
 
@@ -67,11 +145,17 @@ export function ViewLaboratorio({ id }: { id: any }) {
         </div>
 
         <div className=" pt-4 pb-4 border-gray-300 flex whitespace-nowrap">
-          <button className="px-3 py-1 ml-auto font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-500 transition duration-150 ease-in-out hover:cursor-pointer flex">
+          <button
+            onClick={() => setModalEditOpen(true)}
+            className="px-3 py-1 ml-auto font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-500 transition duration-150 ease-in-out hover:cursor-pointer flex"
+          >
             <SquarePen /> <span className="pl-2">Editar laboratorio</span>
           </button>
-          <button className="ml-2 px-3 py-1 font-medium text-white bg-[#ff0000] rounded-md hover:bg-red-600 focus:outline-none focus:shadow-outline-red active:bg-[#ff0000] transition duration-150 ease-in-out flex hover:cursor-pointer">
-            <Trash2 /> <span className="pl-2">Borrar laboratorio</span>
+          <button
+            onClick={() => setModalDelOpen(true)}
+            className="ml-2 px-3 py-1 font-medium text-white bg-[#ff0000] rounded-md hover:bg-red-600 focus:outline-none focus:shadow-outline-red active:bg-[#ff0000] transition duration-150 ease-in-out flex hover:cursor-pointer"
+          >
+            <Trash2 /> <span className="pl-2">Eliminar laboratorio</span>
           </button>
         </div>
         <div className="pt-5 border-t border-gray-300">
@@ -91,6 +175,7 @@ export function ViewLaboratorio({ id }: { id: any }) {
               const file = item.dataValues;
               return (
                 <HCardViewFiles
+                  refresh={() => setRefresh(true)}
                   key={file.id}
                   name={file.name}
                   dir={file.direction}
@@ -101,6 +186,11 @@ export function ViewLaboratorio({ id }: { id: any }) {
           </div>
           <button
             title="Nuevo archivo"
+            onClick={async () => {
+              //@ts-ignore
+              const res = await window.electronAPI.selectFileAndCreate(data.id);
+              if (res.success) setRefresh(true);
+            }}
             className="px-1 py-1 ml-auto mt-5 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-500 transition duration-150 ease-in-out hover:cursor-pointer flex"
           >
             <SquarePlus />{" "}

@@ -1,7 +1,7 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Alert from "../Alertas/AlertProp";
+import Alert from "../../Alertas/AlertProp";
 
 export function NewPacienteForm() {
   const navigate = useNavigate();
@@ -103,14 +103,13 @@ export function NewPacienteForm() {
           <div className="grid sm:grid-cols-9 md:grid-cols-12 lg:grid-cols-12 gap-6 lg:gap-5">
             <div className="col-span-9 sm:col-span-5 md:col-span-6 lg:col-span-6">
               <label className="text-sm font-medium text-gray-900 block mb-2">
-                Nombre
+                Nombre completo
               </label>
               <input
                 type="text"
                 value={nombre}
                 maxLength={100}
                 onChange={(e) => {
-                  console.log("Nombre:", e.target.value);
                   setNombre(e.target.value);
                 }}
                 className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
@@ -127,7 +126,6 @@ export function NewPacienteForm() {
                 value={dui}
                 maxLength={20}
                 onChange={(e) => {
-                  console.log("DUI:", e.target.value);
                   setDui(e.target.value);
                 }}
                 className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
@@ -144,7 +142,6 @@ export function NewPacienteForm() {
                 value={telefono}
                 maxLength={30}
                 onChange={(e) => {
-                  console.log("Teléfono:", e.target.value);
                   setTelefono(e.target.value);
                 }}
                 className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
@@ -159,7 +156,6 @@ export function NewPacienteForm() {
               <select
                 value={sexo}
                 onChange={(e) => {
-                  console.log("Sexo:", e.target.value);
                   setSexo(e.target.value);
                 }}
                 className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
@@ -178,7 +174,6 @@ export function NewPacienteForm() {
                 type="date"
                 value={fechaNacimiento}
                 onChange={(e) => {
-                  console.log("Fecha:", e.target.value);
                   setFechaNacimiento(e.target.value);
                 }}
                 className="shadow-sm bg-gray-50 sm:text-sm rounded-lg border border-gray-300 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5 text-gray-500"
@@ -192,7 +187,6 @@ export function NewPacienteForm() {
               <input
                 value={direccion}
                 onChange={(e) => {
-                  console.log("Dirección:", e.target.value);
                   setDireccion(e.target.value);
                 }}
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4"

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp, SquarePlus } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { HCardViewControles } from "../ViewCards/HCardViewControles";
+import { CreateConsultaModal } from "../../FormsModal/Consulta/CreateConsultaModal";
 
 type FetchFunction = (id: string) => Promise<
   {
@@ -28,7 +28,7 @@ export function ViewListaControles({
   path,
   fetchFunction,
 }: ListaConsultasProps) {
-  const navigate = useNavigate();
+  const [openNewModal, setOpenNewModal] = useState(false);
 
   const [data, setData] = useState<
     { id: string; reason: string; date: string }[]
@@ -67,40 +67,50 @@ export function ViewListaControles({
   }, [search, data]);
 
   return (
-    <div className="flex flex-col pt-5">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={` px-4 py-2 bg-teal-400 font-semibold text-white flex justify-between 
+    <>
+      <CreateConsultaModal
+        isOpen={openNewModal}
+        onConfirm={
+          //@ts-ignore
+          window.consulta.createConstrolByConsulta
+        }
+        onCancel={() => setOpenNewModal(false)}
+        id={id}
+        type={"control"}
+      />
+      <div className="flex flex-col pt-5">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={` px-4 py-2 bg-teal-400 font-semibold text-white flex justify-between 
         rounded-t hover:bg-teal-500 transition hover:cursor-pointer
         ${isOpen ? `` : `rounded-b`}`}
-      >
-        {isOpen ? `Ocultar ${type}` : `Mostrar ${type}`}
-        <ChevronDown className={isOpen ? `hidden` : ``} />
-        <ChevronUp className={isOpen ? `` : `hidden`} />
-      </button>
+        >
+          {isOpen ? `Ocultar ${type}` : `Mostrar ${type}`}
+          <ChevronDown className={isOpen ? `hidden` : ``} />
+          <ChevronUp className={isOpen ? `` : `hidden`} />
+        </button>
 
-      {isOpen && (
-        <div className="flex flex-col shadow-md">
-          {filteredData.map((item) => (
-            <HCardViewControles
-              id_path={item.id}
-              path={path}
-              key={item.id}
-              fecha={item.date}
-              text={item.reason}
-              id={item.id}
-            />
-          ))}
-          <div
-            className="flex justify-center bg-sky-500 hover:bg-blue-500 rounded-b font-semibold text-white inset-shadow-xs p-2 shadow-xs hover:cursor-pointer"
-            onClick={() => {
-              navigate(`${path}/new`);
-            }}
-          >
-            <p className="pr-2">Nuevo {typeSingular}</p> <SquarePlus />
+        {isOpen && (
+          <div className="flex flex-col shadow-md">
+            {filteredData.map((item) => (
+              <HCardViewControles
+                id_path={item.id}
+                path={path}
+                key={item.id}
+                fecha={item.date}
+                text={item.reason}
+                id={item.id}
+              />
+            ))}
+            <div
+              className="flex justify-center bg-sky-500 hover:bg-blue-500 rounded-b font-semibold text-white inset-shadow-xs p-2 shadow-xs hover:cursor-pointer"
+              onClick={() => setOpenNewModal(true)}
+            >
+              <p className="pr-2">Nuevo {typeSingular}</p> <SquarePlus />
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }

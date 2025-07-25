@@ -1,35 +1,36 @@
 import { useState } from "react";
 import Alert from "../../Alertas/AlertProp";
 
-type EditAntecedenteModal = {
-  fecha: string;
-  name: string;
-  description: string;
+type CreateExamenModal = {
   id: string;
-  type: string;
+  name: string;
+  content: string;
+  laboratory: string;
+  fecha: Date;
   isOpen: boolean;
+  refresh: () => void;
   onConfirm: (id: string, data: any) => void;
   onCancel: () => void;
-  refresh: () => void;
 };
 
-export function EditAntecedenteModal({
-  fecha,
-  name,
-  description,
+export function EditExamenModal({
   id,
-  type,
+  name,
+  content,
+  laboratory,
+  fecha,
   isOpen,
   refresh,
   onConfirm,
   onCancel,
-}: EditAntecedenteModal) {
+}: CreateExamenModal) {
   if (!isOpen) return null;
 
   const [data, setData] = useState({
     name,
-    description,
-    date: fecha, // mantenemos la fecha como string para el input type="date"
+    laboratory,
+    content,
+    date: fecha,
   });
 
   const [alerta, setAlerta] = useState<{
@@ -53,20 +54,26 @@ export function EditAntecedenteModal({
         setAlerta({ type: "error", message: "El título no es válido" });
         throw new Error("El título no es válido");
       }
+
+      if (!data.laboratory || data.laboratory === "") {
+        setAlerta({ type: "error", message: "El laboratorio no es válido" });
+        throw new Error("El laboratorio no es válido");
+      }
+
       if (!data.date) {
         setAlerta({ type: "error", message: "La fecha no es válida" });
         throw new Error("La fecha no es válida");
       }
 
       if (!id) {
-        setAlerta({ type: "error", message: "El id no es válido" });
-        throw new Error("El id no es válido");
+        setAlerta({ type: "error", message: "El id_paciente no es válido" });
+        throw new Error("El id_paciente no es válido");
       }
 
       const res = await onConfirm(id, data);
 
       //@ts-ignore
-      if (res == 0) {
+      if (!res) {
         throw new Error("Error al conectar con la base de datos");
       }
       refresh();
@@ -98,7 +105,7 @@ export function EditAntecedenteModal({
           <div className="flex justify-between space-x-4">
             <div className="flex flex-col w-1/2">
               <label className="text-gray-500 text-lg mb-1">
-                {type.charAt(0).toUpperCase() + type.slice(1)}:
+                Laboratorio indicado:
               </label>
               <input
                 type="text"
@@ -110,7 +117,6 @@ export function EditAntecedenteModal({
                 maxLength={60}
               />
             </div>
-
             <div className="flex flex-col w-1/2">
               <label className="text-gray-500 text-lg mb-1">Fecha:</label>
               <input
@@ -118,24 +124,46 @@ export function EditAntecedenteModal({
                 name="date"
                 value={
                   new Date(
-                    new Date(data.date).getTime() +
-                      Math.abs(new Date(data.date).getTimezoneOffset()) * 60000
+                    data.date instanceof Date
+                      ? data.date.getTime() +
+                        Math.abs(data.date.getTimezoneOffset()) * 60000
+                      : data.date
                   )
                     .toISOString()
                     .split("T")[0]
                 }
-                onChange={handleChange}
+                onChange={(e) =>
+                  setData((prev) => ({
+                    ...prev,
+                    date: new Date(e.target.value),
+                  }))
+                }
                 className="border rounded px-3 py-2 text-gray-800"
                 required
               />
             </div>
           </div>
-
+          <div className="flex flex-col w-1/2 mt-5">
+            <label className="text-gray-500 text-lg mb-1">
+              Lugar de realización:
+            </label>
+            <input
+              type="text"
+              name="laboratory"
+              value={data.laboratory}
+              onChange={handleChange}
+              className="border rounded px-3 py-2 text-gray-800"
+              required
+              maxLength={60}
+            />
+          </div>
           <div className="mt-6 flex flex-col">
-            <label className="text-gray-500 text-lg mb-1">Descripción:</label>
+            <label className="text-gray-500 text-lg mb-1">
+              Notas de examen:
+            </label>
             <textarea
-              name="description"
-              value={data.description}
+              name="content"
+              value={data.content}
               onChange={handleChange}
               className="border rounded px-3 py-2 text-gray-800 min-h-[100px]"
               required

@@ -1,8 +1,17 @@
 import { app, dialog, ipcMain, shell } from "electron";
 import fs from "fs";
+import path from "path";
+
 import { connectDB } from "../database/conection.js";
 import { route } from "../database/db.js";
-import path from "path";
+import {
+  create_file_by_laboratorio,
+  update_file,
+} from "../controllers/examen-laboratorio-controller.js";
+
+//create_file_by_laboratorio(id, data)
+//data {name (string de máximo 250), direction (text)}
+//El name es el nombre del archivo con su extensión
 
 export function registerIpcApi() {
   ipcMain.handle("select-sqlite-file", async () => {
@@ -25,6 +34,58 @@ export function registerIpcApi() {
     if (result.canceled || result.filePaths.length === 0) return null;
 
     return result.filePaths[0]; // ruta absoluta del archivo
+  });
+
+  ipcMain.handle("select-file-and-save", async (event, laboratorioId) => {
+    try {
+      const result = await dialog.showOpenDialog({
+        properties: ["openFile"],
+        filters: [],
+      });
+
+      if (result.canceled || result.filePaths.length === 0) return null;
+
+      const filePath = result.filePaths[0];
+      const fileName = path.basename(filePath); // nombre con extensión
+
+      // Guardar en base de datos
+      await create_file_by_laboratorio(laboratorioId, {
+        name: fileName,
+        direction: filePath,
+      });
+
+      return { success: true, name: fileName, direction: filePath };
+    } catch (error) {
+      console.error("Error al guardar archivo en DB:", error);
+      //@ts-ignore
+      return { success: false, error: error.message };
+    }
+  });
+
+  ipcMain.handle("select-file-and-update", async (event, fileId) => {
+    try {
+      const result = await dialog.showOpenDialog({
+        properties: ["openFile"],
+        filters: [],
+      });
+
+      if (result.canceled || result.filePaths.length === 0) return null;
+
+      const filePath = result.filePaths[0];
+      const fileName = path.basename(filePath); // nombre con extensión
+
+      // Actualizar en base de datos
+      await update_file(fileId, {
+        name: fileName,
+        direction: filePath,
+      });
+
+      return { success: true, name: fileName, direction: filePath };
+    } catch (error) {
+      console.error("Error al actualizar archivo en DB:", error);
+      //@ts-ignore
+      return { success: false, error: error.message };
+    }
   });
 
   ipcMain.handle("select-database", async () => {

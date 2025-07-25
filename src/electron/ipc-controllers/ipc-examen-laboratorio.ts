@@ -25,7 +25,7 @@ export function registerIpcExLaboratorio() {
       id,
       data
     );
-    return tratamientos;
+    return tratamientos.dataValues;
   });
 
   ipcMain.handle("updateLaboratorio", async (event, { id, data }) => {

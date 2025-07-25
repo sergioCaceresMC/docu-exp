@@ -56,7 +56,6 @@ export default function ConsultaViewPage() {
         <ViewExFisico id={id} />
         <ViewListaDiagnosticos
           id={id}
-          path="/controles"
           search={""}
           fetchFunction={
             //@ts-ignore
@@ -67,7 +66,6 @@ export default function ConsultaViewPage() {
         />
         <ViewListaTratamientos
           id={id}
-          path="/controles"
           search={""}
           fetchFunction={
             //@ts-ignore
